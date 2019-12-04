@@ -3,7 +3,18 @@ package com.example.starwarscollectablegame.View;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.starwarscollectablegame.Controller.StarWarsAPI.StarwarsApiManager;
+import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryListener;
+import com.example.starwarscollectablegame.Model.StarwarsData.Film;
+import com.example.starwarscollectablegame.Model.StarwarsData.People;
+import com.example.starwarscollectablegame.Model.StarwarsData.Planet;
+import com.example.starwarscollectablegame.Model.StarwarsData.Species;
+import com.example.starwarscollectablegame.Model.StarwarsData.StarWarsDataType;
+import com.example.starwarscollectablegame.Model.StarwarsData.Starship;
+import com.example.starwarscollectablegame.Model.StarwarsData.SwapiEntry;
+import com.example.starwarscollectablegame.Model.StarwarsData.Vehicle;
 import com.example.starwarscollectablegame.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,7 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, SwapiEntryListener {
 
     private GoogleMap mMap;
 
@@ -23,6 +34,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        StarwarsApiManager apiManager = new StarwarsApiManager(this);
+
+        apiManager.getSwapiEntry(this, 1, StarWarsDataType.PLANET);
+
+
         mapFragment.getMapAsync(this);
     }
 
@@ -45,4 +61,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
+    @Override
+    public void onEntryAvailavle(SwapiEntry object, StarWarsDataType type) {
+        switch (type) {
+            case FILM: {
+                Log.e("TEST", ((Film) object).toString());
+                break;
+            }
+            case PEOPLE: {
+                Log.e("TEST", ((People) object).toString());
+                break;
+            }
+            case PLANET: {
+                Log.e("TEST", ((Planet) object).toString());
+                break;
+            }
+            case SPECIES: {
+                Log.e("TEST", ((Species) object).toString());
+                break;
+            }
+            case VIHICLE: {
+                Log.e("TEST", ((Vehicle) object).toString());
+                break;
+            }
+            case STARSHIP: {
+                Log.e("TEST", ((Starship) object).toString());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onEntryError() {
+
+    }
+
+
+
 }
