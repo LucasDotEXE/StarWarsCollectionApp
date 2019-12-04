@@ -1,21 +1,51 @@
 package com.example.starwarscollectablegame.Util;
 
-import android.util.Log;
-
-import com.example.starwarscollectablegame.Model.StarwarsData.Film;
-import com.example.starwarscollectablegame.Model.StarwarsData.People;
-import com.example.starwarscollectablegame.Model.StarwarsData.Planet;
-import com.example.starwarscollectablegame.Model.StarwarsData.Species;
 import com.example.starwarscollectablegame.Model.StarwarsData.StarWarsDataType;
-import com.example.starwarscollectablegame.Model.StarwarsData.Starship;
 import com.example.starwarscollectablegame.Model.StarwarsData.SwapiEntry;
-import com.example.starwarscollectablegame.Model.StarwarsData.Vehicle;
+import com.example.starwarscollectablegame.Util.StarwarsFactory.FilmJsonFactory;
+import com.example.starwarscollectablegame.Util.StarwarsFactory.PeopleJsonFactory;
+import com.example.starwarscollectablegame.Util.StarwarsFactory.PlanetJsonFactory;
+import com.example.starwarscollectablegame.Util.StarwarsFactory.SpeciesJsonFactory;
+import com.example.starwarscollectablegame.Util.StarwarsFactory.StarshipJsonFactory;
+import com.example.starwarscollectablegame.Util.StarwarsFactory.VehicleJsonFactory;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class SwapiFactoryHandler {
 
-    public static SwapiEntry parseJson(JSONObject jsonObject, StarWarsDataType type) {
+
+    public static ArrayList<SwapiEntry> parseSwapiPageJson(JSONObject jsonObject, StarWarsDataType type) {
+        try {
+            JSONArray results = jsonObject.getJSONArray("results");
+            ArrayList<SwapiEntry> parsedResults = new ArrayList<>();
+            for (int i = 0; i < results.length(); i++) {
+                parsedResults.add(parseSwapiEntryJson(results.getJSONObject(i), type));
+            }
+            return parsedResults;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static SwapiEntry parseSwapiEntryJson(JSONObject jsonObject, StarWarsDataType type) {
+        SwapiEntry entry = parseTypeJson(jsonObject, type);
+        try {
+            entry.setCreated(jsonObject.getString("created"));
+            entry.setEdited(jsonObject.getString("edited"));
+            entry.setUrl(jsonObject.getString("url"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return entry;
+    }
+
+    private static SwapiEntry parseTypeJson(JSONObject jsonObject, StarWarsDataType type) {
         switch (type) {
             case FILM:
                 return FilmJsonFactory.getInstance().parseJsonToEntry(jsonObject);

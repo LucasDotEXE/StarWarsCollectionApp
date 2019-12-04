@@ -5,24 +5,12 @@ import java.util.ArrayList;
 
 public class Film extends SwapiEntry implements Serializable {
 
-    public Film(String title, int episodeId, String openingCrawl, String director, String producer, ArrayList<String> speciesUrls, ArrayList<String> starshipsUrls, ArrayList<String> vehiclesUrls, ArrayList<String> planetsUrls, ArrayList<String> charactersUrls) {
-        this.title = title;
-        this.episodeId = episodeId;
-        this.openingCrawl = openingCrawl;
-        this.director = director;
-        this.producer = producer;
-        this.speciesUrls = speciesUrls;
-        this.starshipsUrls = starshipsUrls;
-        this.vehiclesUrls = vehiclesUrls;
-        this.planetsUrls = planetsUrls;
-        this.charactersUrls = charactersUrls;
-    }
-
     private String title;
     private int episodeId;
     private String openingCrawl;
     private String director;
     private String producer;
+    private String releaseDate;
 
     private ArrayList<String> speciesUrls;
     private ArrayList<String> starshipsUrls;
@@ -68,6 +56,14 @@ public class Film extends SwapiEntry implements Serializable {
 
     public void setProducer(String producer) {
         this.producer = producer;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public ArrayList<String> getSpeciesUrls() {

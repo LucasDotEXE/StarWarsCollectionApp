@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.StarwarsApiManager;
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryListener;
+import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryPageListener;
 import com.example.starwarscollectablegame.Model.StarwarsData.Film;
 import com.example.starwarscollectablegame.Model.StarwarsData.People;
 import com.example.starwarscollectablegame.Model.StarwarsData.Planet;
@@ -23,7 +24,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, SwapiEntryListener {
+import java.util.ArrayList;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, SwapiEntryListener, SwapiEntryPageListener {
 
     private GoogleMap mMap;
 
@@ -36,8 +39,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         StarwarsApiManager apiManager = new StarwarsApiManager(this);
 
-        apiManager.getSwapiEntry(this, 1, StarWarsDataType.PLANET);
+//        apiManager.getSwapiEntry(this, 1, StarWarsDataType.FILM);
+//        apiManager.getSwapiEntry(this, 1, StarWarsDataType.PEOPLE);
+//        apiManager.getSwapiEntry(this, 1, StarWarsDataType.PLANET);
+//        apiManager.getSwapiEntry(this, 1, StarWarsDataType.SPECIES);
+//        apiManager.getSwapiEntry(this, 7, StarWarsDataType.STARSHIP);
+//        apiManager.getSwapiEntry(this, 7, StarWarsDataType.VIHICLE);
 
+        apiManager.getSwapiEntryPage(this, 1, StarWarsDataType.FILM);
 
         mapFragment.getMapAsync(this);
     }
@@ -98,5 +107,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    @Override
+    public void onSwapiEntryPageListener(ArrayList<SwapiEntry> entries, StarWarsDataType type, int nextPage) {
+        switch (type) {
+            case FILM: {
+                for (SwapiEntry entry : entries) {
+                    Log.e("TEST", ((Film) entry).toString());
+                }
+                break;
+            }
+            case PEOPLE: {
+//                Log.e("TEST", ((People) object).toString());
+                break;
+            }
+            case PLANET: {
+//                Log.e("TEST", ((Planet) object).toString());
+                break;
+            }
+            case SPECIES: {
+//                Log.e("TEST", ((Species) object).toString());
+                break;
+            }
+            case VIHICLE: {
+//                Log.e("TEST", ((Vehicle) object).toString());
+                break;
+            }
+            case STARSHIP: {
+//                Log.e("TEST", ((Starship) object).toString());
+                break;
+            }
+        }
+    }
 
+    @Override
+    public void onSwapiEntryPageError() {
+
+    }
 }

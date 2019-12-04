@@ -1,10 +1,10 @@
-package com.example.starwarscollectablegame.Util;
+package com.example.starwarscollectablegame.Util.StarwarsFactory;
 
 import com.example.starwarscollectablegame.Model.StarwarsData.SwapiEntry;
 
 import org.json.JSONObject;
 
-public class VehicleJsonFactory extends SwapiEntryJsonFactory {
+public class VehicleJsonFactory implements SwapiEntryJsonFactory {
 
     private static VehicleJsonFactory instance;
 
