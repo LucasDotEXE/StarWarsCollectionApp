@@ -1,9 +1,10 @@
-package com.example.starwarscollectablegame;
+package com.example.starwarscollectablegame.View;
 
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 
+import com.example.starwarscollectablegame.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
