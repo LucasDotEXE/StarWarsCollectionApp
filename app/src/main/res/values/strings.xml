@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">StarwarsCollectableGame</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_notification">NotificationActivity</string>
+    <string name="channel_name">model_update</string>
+    <string name="channel_description">This channel broadcasts updates after unlocking new information</string>
+    <string name="channel_id">updates</string>
+    <string name="update_model_title">Info unlocked!</string>
+    <string name="update_model_text1">You unlocked new information for</string>
 </resources>
