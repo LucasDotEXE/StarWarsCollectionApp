@@ -1,7 +1,7 @@
 package com.example.starwarscollectablegame.Controller.StarWarsAPI;
 
-import com.example.starwarscollectablegame.Model.StarwarsData.StarWarsDataType;
-import com.example.starwarscollectablegame.Model.StarwarsData.SwapiEntry;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.StarWarsDataType;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
 
 public interface SwapiEntryListener {
     void onEntryAvailavle(SwapiEntry object, StarWarsDataType type);

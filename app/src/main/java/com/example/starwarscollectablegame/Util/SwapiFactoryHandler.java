@@ -1,7 +1,7 @@
 package com.example.starwarscollectablegame.Util;
 
-import com.example.starwarscollectablegame.Model.StarwarsData.StarWarsDataType;
-import com.example.starwarscollectablegame.Model.StarwarsData.SwapiEntry;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.StarWarsDataType;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
 import com.example.starwarscollectablegame.Util.StarwarsFactory.FilmJsonFactory;
 import com.example.starwarscollectablegame.Util.StarwarsFactory.PeopleJsonFactory;
 import com.example.starwarscollectablegame.Util.StarwarsFactory.PlanetJsonFactory;
@@ -34,14 +34,7 @@ public class SwapiFactoryHandler {
 
     public static SwapiEntry parseSwapiEntryJson(JSONObject jsonObject, StarWarsDataType type) {
         SwapiEntry entry = parseTypeJson(jsonObject, type);
-        try {
-            entry.setCreated(jsonObject.getString("created"));
-            entry.setEdited(jsonObject.getString("edited"));
-            entry.setUrl(jsonObject.getString("url"));
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return entry;
     }
 

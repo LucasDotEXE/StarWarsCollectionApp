@@ -1,8 +1,7 @@
 package com.example.starwarscollectablegame.Util.StarwarsFactory;
 
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.starwarscollectablegame.Model.StarwarsData.Film;
-import com.example.starwarscollectablegame.Model.StarwarsData.SwapiEntry;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,7 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import static com.example.starwarscollectablegame.Util.JsonParsingMethods.jsonArrayToStringArray;
+import static com.example.starwarscollectablegame.Util.StarwarsFactory.JsonParsingMethods.jsonArrayToStringArray;
 
 public class FilmJsonFactory implements SwapiEntryJsonFactory {
 
@@ -28,32 +27,29 @@ public class FilmJsonFactory implements SwapiEntryJsonFactory {
 
     @Override
     public SwapiEntry parseJsonToEntry(JSONObject jsonObject) {
-        Film film = new Film();
-
         try {
-            film.setTitle(jsonObject.getString("title"));
-            film.setEpisodeId(jsonObject.getInt("episode_id"));
-            film.setOpeningCrawl(jsonObject.getString("opening_crawl"));
-            film.setDirector(jsonObject.getString("director"));
-            film.setProducer(jsonObject.getString("producer"));
-            film.setReleaseDate(jsonObject.getString("release_date"));
+            String created = jsonObject.getString("created");
+            String edited = jsonObject.getString("edited");
+            String url = jsonObject.getString("url");
 
-            JSONArray characters = jsonObject.getJSONArray("characters");
-            JSONArray planets = jsonObject.getJSONArray("planets");
-            JSONArray starships = jsonObject.getJSONArray("starships");
-            JSONArray vehicles = jsonObject.getJSONArray("vehicles");
-            JSONArray species = jsonObject.getJSONArray("species");
+            String title =  jsonObject.getString("title");
+            int episodeId = jsonObject.getInt("episode_id");
+            String openingCrawl = jsonObject.getString("opening_crawl");
+            String director = jsonObject.getString("director");
+            String producer = jsonObject.getString("producer");
+            String releaseDate = jsonObject.getString("release_date");
 
-            film.setCharactersUrls(jsonArrayToStringArray(characters));
-            film.setPlanetsUrls(jsonArrayToStringArray(planets));
-            film.setStarshipsUrls(jsonArrayToStringArray(starships));
-            film.setVehiclesUrls(jsonArrayToStringArray(vehicles));
-            film.setSpeciesUrls(jsonArrayToStringArray(species));
+            ArrayList<String> characters = jsonArrayToStringArray(jsonObject.getJSONArray("characters"));
+            ArrayList<String> planets = jsonArrayToStringArray(jsonObject.getJSONArray("planets"));
+            ArrayList<String> starship = jsonArrayToStringArray(jsonObject.getJSONArray("starships"));
+            ArrayList<String> vehicles = jsonArrayToStringArray(jsonObject.getJSONArray("vehicles"));
+            ArrayList<String> species =  jsonArrayToStringArray(jsonObject.getJSONArray("species"));
+            return new Film(created, edited, url, title, episodeId, openingCrawl, director,producer, releaseDate,
+                    species, starship, vehicles, planets, characters);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        return film;
+        return null;
     }
 
 

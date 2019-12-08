@@ -1,4 +1,4 @@
-package com.example.starwarscollectablegame.Util;
+package com.example.starwarscollectablegame.Util.StarwarsFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;

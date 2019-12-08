@@ -1,4 +1,4 @@
-package com.example.starwarscollectablegame.Model.StarwarsData;
+package com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData;
 
 public enum StarWarsDataType {
     FILM("films"), PEOPLE("people"), PLANET("planets"), SPECIES("species"), STARSHIP("starships"), VIHICLE("vehicles");

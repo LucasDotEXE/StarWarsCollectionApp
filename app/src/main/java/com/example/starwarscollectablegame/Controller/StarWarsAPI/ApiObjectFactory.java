@@ -6,8 +6,6 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
-import com.example.starwarscollectablegame.Model.StarwarsData.SwapiEntry;
-import com.example.starwarscollectablegame.Util.SwapiFactoryHandler;
 
 import org.json.JSONObject;
 

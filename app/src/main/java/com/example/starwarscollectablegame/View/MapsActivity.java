@@ -1,24 +1,23 @@
 package com.example.starwarscollectablegame.View;
 
-import androidx.fragment.app.FragmentActivity;
-
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.StarwarsApiManager;
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryListener;
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryPageListener;
-import com.example.starwarscollectablegame.Model.StarwarsData.Film;
-import com.example.starwarscollectablegame.Model.StarwarsData.People;
-import com.example.starwarscollectablegame.Model.StarwarsData.Planet;
-import com.example.starwarscollectablegame.Model.StarwarsData.Species;
-import com.example.starwarscollectablegame.Model.StarwarsData.StarWarsDataType;
-import com.example.starwarscollectablegame.Model.StarwarsData.Starship;
-import com.example.starwarscollectablegame.Model.StarwarsData.SwapiEntry;
-import com.example.starwarscollectablegame.Model.StarwarsData.Vehicle;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Species;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.StarWarsDataType;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
 import com.example.starwarscollectablegame.R;
-import com.google.android.gms.maps.CameraUpdate;
+import com.example.starwarscollectablegame.ViewModel.StarWarsViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,11 +28,13 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, SwapiEntryListener, SwapiEntryPageListener {
 
     private GoogleMap mMap;
+
+    private StarWarsViewModel starWarsViewModel;
 
     private StarwarsApiManager apiManager;
 
@@ -53,9 +54,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        apiManager.getSwapiEntry(this, 7, StarWarsDataType.STARSHIP);
 //        apiManager.getSwapiEntry(this, 7, StarWarsDataType.VIHICLE);
 
-        apiManager.getSwapiEntryPage(this, 1, StarWarsDataType.SPECIES);
+//        apiManager.getSwapiEntryPage(this, 1, StarWarsDataType.FILM);
 
         mapFragment.getMapAsync(this);
+
+        this.starWarsViewModel = ViewModelProviders.of(this).get(StarWarsViewModel.class);
+        this.starWarsViewModel.getAllFilms().observe(this, new Observer<List<Film>>() {
+            @Override
+            public void onChanged(List<Film> films) {
+                for (Film film : films) {
+                    Log.i("EWA", film.toString());
+                }
+            }
+        });
     }
 
 
@@ -90,11 +101,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // in a raw resource file.
             boolean success = googleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.sith_style_json)); //raw vind hem wel gewoon
-//                            this, R.raw.jedi_style_json)); //raw vind hem wel gewoon
+                            this, R.raw.sith_style_json));
+//                            this, R.raw.test));
 
             if (!success) {
                 Log.e("MAPACtivity", "Style parsing failed.");
+            } else {
+                Log.i("MapAct", "Map style succesfully loaded");
             }
         } catch (Resources.NotFoundException e) {
             Log.e("MAPACtivity", "Can't find style. Error: ", e);
@@ -137,13 +150,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
     @Override
     public void onSwapiEntryPageListener(ArrayList<SwapiEntry> entries, StarWarsDataType type, int nextPage) {
 //        switch (type) {
 //            case FILM: {
 //                for (SwapiEntry entry : entries) {
-//                    Log.e("TEST", ((Film) entry).toString());
+//                    Film film = (Film) entry;
+//                    this.starWarsViewModel.insert(film);
 //                }
 //                break;
 //            }
@@ -172,6 +185,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        }
         if (nextPage != -1) {
             apiManager.getSwapiEntryPage(this, nextPage, type);
+        } else {
+            for (Film film : starWarsViewModel.getAllFilms().getValue()) {
+                Log.e("EWA", film.toString());
+            }
         }
     }
 
