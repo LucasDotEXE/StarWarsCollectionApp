@@ -1,4 +1,4 @@
-package com.example.starwarscollectablegame.Model.StarwarsDatabaseData;
+package com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
