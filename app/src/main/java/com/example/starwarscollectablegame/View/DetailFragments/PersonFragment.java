@@ -4,7 +4,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarWarsDataba
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.People;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
 import com.example.starwarscollectablegame.R;
+import com.example.starwarscollectablegame.ViewModel.PeopleFragmentViewModel;
 
 import org.w3c.dom.Text;
 
@@ -29,8 +33,16 @@ import org.w3c.dom.Text;
 public class PersonFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    private int level;
+    private int level = 2;
     private People people;
+    private PeopleFragmentViewModel model;
+    private TextView eyecolor;
+    private TextView birthyear;
+    private TextView gender;
+    private TextView haircolor;
+    private TextView height;
+    private TextView homeworld;
+    private TextView mass;
 
     public PersonFragment() {
         // Required empty public constructor
@@ -49,11 +61,23 @@ public class PersonFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        model = ViewModelProviders.of(getActivity()).get(PeopleFragmentViewModel.class);
         if (getArguments()!= null)
         {
-            //Todo: Parcelable
-            people = (People) getArguments().getSerializable("object");
-            level = getArguments().getInt("level");
+            String name = getArguments().getString("name");
+
+            final Observer<People> peopleObserver = new Observer<People>(){
+                @Override
+                public void onChanged(@Nullable final People newPeople)
+                {
+                    eyecolor.setText(people.getEyeColor());
+                }
+            };
+            model.getPeople(name).observe(this, peopleObserver);
+
+
+           /* people = (People) getArguments().getSerializable("object");
+            level = getArguments().getInt("level");*/
             /* For activity
                         SwapiEntry swapiEntry = (SwapiEntry) getArguments().getSerializable("swapientry");
             switch ((String)getArguments().get("swapitype")) {
@@ -73,22 +97,22 @@ public class PersonFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_person, container, false);
-        TextView eyecolor = view.findViewById(R.id.people_fragment_eyecolor);
-        TextView birthyear = view.findViewById(R.id.people_fragment_birthyear);
-        TextView gender = view.findViewById(R.id.people_fragment_gender);
-        TextView haircolor = view.findViewById(R.id.people_fragment_haircolor);
-        TextView height = view.findViewById(R.id.people_fragment_height);
-        TextView homeworld = view.findViewById(R.id.people_fragment_homeworld);
-        TextView mass = view.findViewById(R.id.people_fragment_mass);
+        eyecolor = view.findViewById(R.id.people_fragment_eyecolor);
+         birthyear = view.findViewById(R.id.people_fragment_birthyear);
+         gender = view.findViewById(R.id.people_fragment_gender);
+         haircolor = view.findViewById(R.id.people_fragment_haircolor);
+         height = view.findViewById(R.id.people_fragment_height);
+         homeworld = view.findViewById(R.id.people_fragment_homeworld);
+         mass = view.findViewById(R.id.people_fragment_mass);
 
-        homeworld.setText(people.hom);
+        /*homeworld.setText(people.hom);
         if (level > 1){
 
         }
         if (level > 2)
         {
 
-        }
+        }*/
         return view;
     }
 

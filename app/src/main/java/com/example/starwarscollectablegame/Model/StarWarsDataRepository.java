@@ -21,6 +21,7 @@ import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDataba
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Starship;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Vehicle;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
@@ -72,13 +73,11 @@ public class StarWarsDataRepository {
         this.vehicleDatabaseEditor = new DatabaseEditHelper<>(this.vehicleDao);
     }
 
-    public List<Planet> getPlanetByUrl(String url) {
-        return  this.planetDao.getPlanetsByUtl(url);
-    }
 
     public void deleteAllFilms() {
         new DeleteAllNotesAsyncTask(filmDao).execute();
     }
+
 
 
     public List<Planet> getPlanetByUrl(String url) {
@@ -109,6 +108,14 @@ public class StarWarsDataRepository {
         return allVehicle;
     }
 
+    public LiveData<People> getPeopleByName(String name) {
+        /*AsyncTask<String, Void, LiveData<List<People>>> task = new getPeopleByNameAsyncTask(peopleDao, name);
+        task.execute();
+*/
+        return this.peopleDao.getPeopleByName(name);
+
+    }
+
 
     private static class DeleteAllNotesAsyncTask extends AsyncTask<Void, Void, Void> {
         private FilmDao noteDao;
@@ -123,4 +130,18 @@ public class StarWarsDataRepository {
             return null;
         }
     }
+
+    /*private class getPeopleByNameAsyncTask extends AsyncTask<String, Void, LiveData<List<People>>>{
+        private PeopleDao peopleDao;
+
+        public getPeopleByNameAsyncTask(PeopleDao peopleDao, String name) {
+            this.peopleDao = peopleDao;
+
+        }
+
+        @Override
+        protected LiveData<List<People>> doInBackground(String... strings) {
+            return peopleDao.getPeopleByName(strings[0]);
+        }
+    }*/
 }
