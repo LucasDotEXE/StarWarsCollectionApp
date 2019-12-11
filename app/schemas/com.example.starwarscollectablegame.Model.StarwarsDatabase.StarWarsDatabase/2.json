@@ -1,0 +1,658 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "074274ee713a1cda14d989f8bf071138",
+    "entities": [
+      {
+        "tableName": "film_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`episode_id` INTEGER NOT NULL, `title` TEXT, `opening_crawl` TEXT, `director` TEXT, `producer` TEXT, `release_date` TEXT, `species_url` TEXT, `starships_url` TEXT, `vehicles_url` TEXT, `planets_url` TEXT, `characters_url` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`episode_id`))",
+        "fields": [
+          {
+            "fieldPath": "episodeId",
+            "columnName": "episode_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "openingCrawl",
+            "columnName": "opening_crawl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "director",
+            "columnName": "director",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "producer",
+            "columnName": "producer",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "releaseDate",
+            "columnName": "release_date",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "speciesUrls",
+            "columnName": "species_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "starshipsUrls",
+            "columnName": "starships_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "vehiclesUrls",
+            "columnName": "vehicles_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "planetsUrls",
+            "columnName": "planets_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "charactersUrls",
+            "columnName": "characters_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "edited",
+            "columnName": "edited",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "episode_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "people_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `eye_color` TEXT, `birth_year` TEXT, `gender` TEXT, `hair_color` TEXT, `height` TEXT, `home_world_url` TEXT, `mass` TEXT, `skin_color` TEXT, `film_url` TEXT, `species_url` TEXT, `starships_url` TEXT, `vehicles_url` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eyeColor",
+            "columnName": "eye_color",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "birthYear",
+            "columnName": "birth_year",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hairColor",
+            "columnName": "hair_color",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "height",
+            "columnName": "height",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "homeWorldUrl",
+            "columnName": "home_world_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mass",
+            "columnName": "mass",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "skinColor",
+            "columnName": "skin_color",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "filmsUrls",
+            "columnName": "film_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "speciesUrls",
+            "columnName": "species_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "starshipsUrls",
+            "columnName": "starships_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "vehiclesUrls",
+            "columnName": "vehicles_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "edited",
+            "columnName": "edited",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "name"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "planet_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `diameter` TEXT, `gravity` TEXT, `population` TEXT, `climate` TEXT, `terrain` TEXT, `rotation_period` TEXT, `orbital_period` TEXT, `surface_water` TEXT, `residents_url` TEXT, `film_url` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "diameter",
+            "columnName": "diameter",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gravity",
+            "columnName": "gravity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "population",
+            "columnName": "population",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "climate",
+            "columnName": "climate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "terrain",
+            "columnName": "terrain",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rotationPeriod",
+            "columnName": "rotation_period",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "orbitalPeriod",
+            "columnName": "orbital_period",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "surfaceWater",
+            "columnName": "surface_water",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "residentsUrls",
+            "columnName": "residents_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "filmsUrls",
+            "columnName": "film_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "edited",
+            "columnName": "edited",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "name"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "species_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `classification` TEXT, `designation` TEXT, `average_height` TEXT, `average_lifespan` TEXT, `eye_colors` TEXT, `hair_colors` TEXT, `skin_colors` TEXT, `home_world` TEXT, `language` TEXT, `people_urls` TEXT, `films_urls` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "classification",
+            "columnName": "classification",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "designation",
+            "columnName": "designation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "averageHeight",
+            "columnName": "average_height",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "averageLifespan",
+            "columnName": "average_lifespan",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "eyeColors",
+            "columnName": "eye_colors",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hairColors",
+            "columnName": "hair_colors",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "skinColors",
+            "columnName": "skin_colors",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "homeWorld",
+            "columnName": "home_world",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "peopleUrls",
+            "columnName": "people_urls",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "filmsUrls",
+            "columnName": "films_urls",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "edited",
+            "columnName": "edited",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "name"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "starship_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `model` TEXT NOT NULL, `manufacturer` TEXT, `costInCredits` TEXT, `length` TEXT, `crew` TEXT, `passengers` TEXT, `maxAtmospheringSpeed` TEXT, `cargoCapacity` TEXT, `consumables` TEXT, `mglt` TEXT, `starshipClass` TEXT, `hyperdriveRating` TEXT, `pilotsUrls` TEXT, `filmsUrls` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`, `model`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "model",
+            "columnName": "model",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "manufacturer",
+            "columnName": "manufacturer",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "costInCredits",
+            "columnName": "costInCredits",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "length",
+            "columnName": "length",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "crew",
+            "columnName": "crew",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "passengers",
+            "columnName": "passengers",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxAtmospheringSpeed",
+            "columnName": "maxAtmospheringSpeed",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cargoCapacity",
+            "columnName": "cargoCapacity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "consumables",
+            "columnName": "consumables",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mglt",
+            "columnName": "mglt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "starshipClass",
+            "columnName": "starshipClass",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hyperdriveRating",
+            "columnName": "hyperdriveRating",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pilotsUrls",
+            "columnName": "pilotsUrls",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "filmsUrls",
+            "columnName": "filmsUrls",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "edited",
+            "columnName": "edited",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "name",
+            "model"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "vehicle_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `model` TEXT NOT NULL, `vehicle_class` TEXT, `manufacturer` TEXT, `cost_in_credits` TEXT, `length` TEXT, `crew` TEXT, `passengers` TEXT, `max_atmospherics_speed` TEXT, `cargo_capacity` TEXT, `consumables` TEXT, `pilots_urls` TEXT, `film_urls` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`, `model`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "model",
+            "columnName": "model",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vehicleClass",
+            "columnName": "vehicle_class",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "manufacturer",
+            "columnName": "manufacturer",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "costInCredits",
+            "columnName": "cost_in_credits",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "length",
+            "columnName": "length",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "crew",
+            "columnName": "crew",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "passengers",
+            "columnName": "passengers",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maxAtmospheringSpeed",
+            "columnName": "max_atmospherics_speed",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cargoCapacity",
+            "columnName": "cargo_capacity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "consumables",
+            "columnName": "consumables",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pilotsUrls",
+            "columnName": "pilots_urls",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "filmsUrls",
+            "columnName": "film_urls",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "created",
+            "columnName": "created",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "edited",
+            "columnName": "edited",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "name",
+            "model"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '074274ee713a1cda14d989f8bf071138')"
+    ]
+  }
+}
