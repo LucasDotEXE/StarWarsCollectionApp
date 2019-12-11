@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDataba
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
 import com.example.starwarscollectablegame.R;
 import com.example.starwarscollectablegame.ViewModel.PeopleFragmentViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Text;
 
@@ -43,6 +45,7 @@ public class PersonFragment extends Fragment {
     private TextView height;
     private TextView homeworld;
     private TextView mass;
+    private static final String log = "PersonFragment";
 
     public PersonFragment() {
         // Required empty public constructor
@@ -65,16 +68,18 @@ public class PersonFragment extends Fragment {
         if (getArguments()!= null)
         {
             String name = getArguments().getString("name");
-
+            Log.d(log, "name received: name");
             final Observer<People> peopleObserver = new Observer<People>(){
                 @Override
                 public void onChanged(@Nullable final People newPeople)
                 {
+                    Log.d(log, "observed change");
                     eyecolor.setText(people.getEyeColor());
                 }
             };
-            model.getPeople(name).observe(this, peopleObserver);
 
+            model.getPeople(name).observe(this, peopleObserver);
+            Log.d(log, "initiated observer" + peopleObserver.toString());
 
            /* people = (People) getArguments().getSerializable("object");
             level = getArguments().getInt("level");*/
@@ -89,6 +94,8 @@ public class PersonFragment extends Fragment {
             }*/
 
         }
+        else
+            Log.d(log, "No args received");
     }
 
     @Override
@@ -104,6 +111,9 @@ public class PersonFragment extends Fragment {
          height = view.findViewById(R.id.people_fragment_height);
          homeworld = view.findViewById(R.id.people_fragment_homeworld);
          mass = view.findViewById(R.id.people_fragment_mass);
+
+
+
 
         /*homeworld.setText(people.hom);
         if (level > 1){

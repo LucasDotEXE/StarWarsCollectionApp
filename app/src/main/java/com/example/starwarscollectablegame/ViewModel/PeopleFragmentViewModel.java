@@ -27,7 +27,7 @@ public class PeopleFragmentViewModel extends AndroidViewModel {
         return people;
     }
 
-    public PeopleFragmentViewModel(@NonNull DetailActivity application) {
+    public PeopleFragmentViewModel(@NonNull Application application) {
         super(application);
         this.repo = new StarWarsDataRepository(application);
     }

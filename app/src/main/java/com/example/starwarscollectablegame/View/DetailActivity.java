@@ -11,7 +11,7 @@ import com.example.starwarscollectablegame.R;
 import com.example.starwarscollectablegame.View.DetailFragments.PersonFragment;
 import com.example.starwarscollectablegame.ViewModel.PeopleFragmentViewModel;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity  implements PersonFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class DetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_detail);
 
-        PeopleFragmentViewModel viewModel = new PeopleFragmentViewModel(this);
+        PeopleFragmentViewModel viewModel = new PeopleFragmentViewModel(getApplication());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -28,5 +28,14 @@ public class DetailActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         String testName ="Luke Skywalker" ;
         bundle.putString("name", testName);
+        infoFragment.setArguments(bundle);
+        fragmentTransaction.add(R.id.fragment, infoFragment);
+        fragmentTransaction.commit();
+
+    }
+
+    @Override
+    public void onFragmentInteraction() {
+
     }
 }
