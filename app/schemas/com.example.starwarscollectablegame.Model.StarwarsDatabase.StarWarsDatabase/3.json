@@ -1,16 +1,16 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "a9cd3dfcf47d9eb7d7b7d786401fbde1",
+    "version": 3,
+    "identityHash": "074274ee713a1cda14d989f8bf071138",
     "entities": [
       {
         "tableName": "film_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`film_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `episode_id` INTEGER NOT NULL, `opening_crawl` TEXT, `director` TEXT, `producer` TEXT, `release_date` TEXT, `species_url` TEXT, `starships_url` TEXT, `vehicles_url` TEXT, `planets_url` TEXT, `characters_url` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`episode_id` INTEGER NOT NULL, `title` TEXT, `opening_crawl` TEXT, `director` TEXT, `producer` TEXT, `release_date` TEXT, `species_url` TEXT, `starships_url` TEXT, `vehicles_url` TEXT, `planets_url` TEXT, `characters_url` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`episode_id`))",
         "fields": [
           {
-            "fieldPath": "film_id",
-            "columnName": "film_id",
+            "fieldPath": "episodeId",
+            "columnName": "episode_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -19,12 +19,6 @@
             "columnName": "title",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "episodeId",
-            "columnName": "episode_id",
-            "affinity": "INTEGER",
-            "notNull": true
           },
           {
             "fieldPath": "openingCrawl",
@@ -101,28 +95,22 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "film_id"
+            "episode_id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "people_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`people_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `eye_color` TEXT, `birth_year` TEXT, `gender` TEXT, `hair_color` TEXT, `height` TEXT, `home_world_url` TEXT, `mass` TEXT, `skin_color` TEXT, `film_url` TEXT, `species_url` TEXT, `starships_url` TEXT, `vehicles_url` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `eye_color` TEXT, `birth_year` TEXT, `gender` TEXT, `hair_color` TEXT, `height` TEXT, `home_world_url` TEXT, `mass` TEXT, `skin_color` TEXT, `film_url` TEXT, `species_url` TEXT, `starships_url` TEXT, `vehicles_url` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`))",
         "fields": [
-          {
-            "fieldPath": "people_id",
-            "columnName": "people_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "eyeColor",
@@ -217,28 +205,22 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "people_id"
+            "name"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "planet_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`planet_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `diameter` TEXT, `gravity` TEXT, `population` TEXT, `climate` TEXT, `terrain` TEXT, `rotation_period` TEXT, `orbital_period` TEXT, `surface_water` TEXT, `residents_url` TEXT, `film_url` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `diameter` TEXT, `gravity` TEXT, `population` TEXT, `climate` TEXT, `terrain` TEXT, `rotation_period` TEXT, `orbital_period` TEXT, `surface_water` TEXT, `residents_url` TEXT, `film_url` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`))",
         "fields": [
-          {
-            "fieldPath": "planet_id",
-            "columnName": "planet_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "diameter",
@@ -321,28 +303,22 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "planet_id"
+            "name"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "species_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`species_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `classification` TEXT, `designation` TEXT, `average_height` TEXT, `average_lifespan` TEXT, `eye_colors` TEXT, `hair_colors` TEXT, `skin_colors` TEXT, `home_world` TEXT, `language` TEXT, `people_urls` TEXT, `films_urls` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `classification` TEXT, `designation` TEXT, `average_height` TEXT, `average_lifespan` TEXT, `eye_colors` TEXT, `hair_colors` TEXT, `skin_colors` TEXT, `home_world` TEXT, `language` TEXT, `people_urls` TEXT, `films_urls` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`))",
         "fields": [
-          {
-            "fieldPath": "species_id",
-            "columnName": "species_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "classification",
@@ -431,34 +407,28 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "species_id"
+            "name"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "starship_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`starship_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `model` TEXT, `manufacturer` TEXT, `costInCredits` TEXT, `length` TEXT, `crew` TEXT, `passengers` TEXT, `maxAtmospheringSpeed` TEXT, `cargoCapacity` TEXT, `consumables` TEXT, `mglt` TEXT, `starshipClass` TEXT, `hyperdriveRating` TEXT, `pilotsUrls` TEXT, `filmsUrls` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `model` TEXT NOT NULL, `manufacturer` TEXT, `costInCredits` TEXT, `length` TEXT, `crew` TEXT, `passengers` TEXT, `maxAtmospheringSpeed` TEXT, `cargoCapacity` TEXT, `consumables` TEXT, `mglt` TEXT, `starshipClass` TEXT, `hyperdriveRating` TEXT, `pilotsUrls` TEXT, `filmsUrls` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`, `model`))",
         "fields": [
-          {
-            "fieldPath": "starship_id",
-            "columnName": "starship_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "model",
             "columnName": "model",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "manufacturer",
@@ -559,34 +529,29 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "starship_id"
+            "name",
+            "model"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "vehicle_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vehicle_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `model` TEXT, `vehicle_class` TEXT, `manufacturer` TEXT, `cost_in_credits` TEXT, `length` TEXT, `crew` TEXT, `passengers` TEXT, `max_atmospherics_speed` TEXT, `cargo_capacity` TEXT, `consumables` TEXT, `pilots_urls` TEXT, `film_urls` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `model` TEXT NOT NULL, `vehicle_class` TEXT, `manufacturer` TEXT, `cost_in_credits` TEXT, `length` TEXT, `crew` TEXT, `passengers` TEXT, `max_atmospherics_speed` TEXT, `cargo_capacity` TEXT, `consumables` TEXT, `pilots_urls` TEXT, `film_urls` TEXT, `created` TEXT, `edited` TEXT, `url` TEXT, PRIMARY KEY(`name`, `model`))",
         "fields": [
-          {
-            "fieldPath": "vehicle_id",
-            "columnName": "vehicle_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "model",
             "columnName": "model",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "vehicleClass",
@@ -675,9 +640,10 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "vehicle_id"
+            "name",
+            "model"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -686,7 +652,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a9cd3dfcf47d9eb7d7b7d786401fbde1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '074274ee713a1cda14d989f8bf071138')"
     ]
   }
 }

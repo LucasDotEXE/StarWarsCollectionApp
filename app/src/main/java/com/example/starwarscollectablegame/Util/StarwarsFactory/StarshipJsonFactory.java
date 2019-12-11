@@ -6,6 +6,8 @@ import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDataba
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import static com.example.starwarscollectablegame.Util.StarwarsFactory.JsonParsingMethods.jsonArrayToStringArray;
 
 public class StarshipJsonFactory implements SwapiEntryJsonFactory {
@@ -24,31 +26,35 @@ public class StarshipJsonFactory implements SwapiEntryJsonFactory {
 
     @Override
     public SwapiEntry parseJsonToEntry(JSONObject jsonObject) {
-//        Starship starship = new Starship();
-//
-//        try {
-//            starship.setName(jsonObject.getString("name"));
-//            starship.setModel(jsonObject.getString("model"));
-//            starship.setManufacturer(jsonObject.getString("manufacturer"));
-//            starship.setCostInCredits(jsonObject.getString("cost_in_credits"));
-//            starship.setLength(jsonObject.getString("length"));
-//            starship.setMaxAtmospheringSpeed(jsonObject.getString("max_atmosphering_speed"));
-//            starship.setCrew(jsonObject.getString("crew"));
-//            starship.setPassengers(jsonObject.getString("passengers"));
-//            starship.setCargoCapacity(jsonObject.getString("cargo_capacity"));
-//            starship.setConsumables(jsonObject.getString("consumables"));
-//            starship.setHyperdriveRating(jsonObject.getString("hyperdrive_rating"));
-//            starship.setMglt(jsonObject.getString("MGLT"));
-//            starship.setStarshipClass(jsonObject.getString("starship_class"));
-//
-//            starship.setPilotsUrls(jsonArrayToStringArray(jsonObject.getJSONArray("pilots")));
-//            starship.setFilmsUrls(jsonArrayToStringArray(jsonObject.getJSONArray("films")));
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        return starship;
+
+        try {
+            String created = jsonObject.getString("created");
+            String edited = jsonObject.getString("edited");
+            String url = jsonObject.getString("url");
+
+            String name = jsonObject.getString("name");
+            String model = jsonObject.getString("model");
+            String manufacturer = jsonObject.getString("manufacturer");
+            String costInCredits = jsonObject.getString("cost_in_credits");
+            String length = jsonObject.getString("length");
+            String maxAtmospheringSpeed = jsonObject.getString("max_atmosphering_speed");
+            String crew = jsonObject.getString("crew");
+            String passengers = jsonObject.getString("passengers");
+            String cargoCapacity = jsonObject.getString("cargo_capacity");
+            String consumables = jsonObject.getString("consumables");
+            String hyperdriveRating = jsonObject.getString("hyperdrive_rating");
+            String mglt = jsonObject.getString("MGLT");
+            String starshipClass = jsonObject.getString("starship_class");
+
+            ArrayList<String> pilots = jsonArrayToStringArray(jsonObject.getJSONArray("pilots"));
+            ArrayList<String> films = jsonArrayToStringArray(jsonObject.getJSONArray("films"));
+
+            return new Starship(created, edited, url, name, model, manufacturer, costInCredits, length, crew,
+                    passengers, maxAtmospheringSpeed, cargoCapacity, consumables, mglt, starshipClass, hyperdriveRating, pilots, films);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }

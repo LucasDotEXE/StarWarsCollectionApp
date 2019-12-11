@@ -1,5 +1,6 @@
 package com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,11 +11,9 @@ import java.util.ArrayList;
 @Entity(tableName = "species_table")
 public class Species extends SwapiEntry implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
-    private int species_id;
-
-    @ColumnInfo(name = "name")
+    @PrimaryKey @ColumnInfo(name = "name") @NonNull
     private String name;
+
     @ColumnInfo(name = "classification")
     private String classification;
     @ColumnInfo(name = "designation")
@@ -53,14 +52,6 @@ public class Species extends SwapiEntry implements Serializable {
         this.language = language;
         this.peopleUrls = peopleUrls;
         this.filmsUrls = filmsUrls;
-    }
-
-    public int getSpecies_id() {
-        return species_id;
-    }
-
-    public void setSpecies_id(int species_id) {
-        this.species_id = species_id;
     }
 
     public String getName() {
@@ -109,5 +100,23 @@ public class Species extends SwapiEntry implements Serializable {
 
     public ArrayList<String> getFilmsUrls() {
         return filmsUrls;
+    }
+
+    @Override
+    public String toString() {
+        return "Species{" +
+                ", name='" + name + '\'' +
+                ", classification='" + classification + '\'' +
+                ", designation='" + designation + '\'' +
+                ", averageHeight='" + averageHeight + '\'' +
+                ", averageLifespan='" + averageLifespan + '\'' +
+                ", eyeColors='" + eyeColors + '\'' +
+                ", hairColors='" + hairColors + '\'' +
+                ", skinColors='" + skinColors + '\'' +
+                ", homeWorld='" + homeWorld + '\'' +
+                ", language='" + language + '\'' +
+                ", peopleUrls=" + peopleUrls +
+                ", filmsUrls=" + filmsUrls +
+                '}';
     }
 }

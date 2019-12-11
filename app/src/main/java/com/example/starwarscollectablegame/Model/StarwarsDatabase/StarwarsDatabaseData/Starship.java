@@ -1,5 +1,6 @@
 package com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,16 +8,13 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@Entity(tableName = "starship_table")
+@Entity(tableName = "starship_table", primaryKeys = {"name", "model"})
 public class Starship extends SwapiEntry implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
-    private int starship_id;
-
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "name") @NonNull
     private String name;
+    @ColumnInfo(name = "model") @NonNull
     private String model;
-    private String vehicleClass;
     private String manufacturer;
     private String costInCredits;
     private String length;
@@ -32,11 +30,10 @@ public class Starship extends SwapiEntry implements Serializable {
     private ArrayList<String> pilotsUrls;
     private ArrayList<String> filmsUrls;
 
-    public Starship(String created, String edited, String url, String name, String model, String vehicleClass, String manufacturer, String costInCredits, String length, String crew, String passengers, String maxAtmospheringSpeed, String cargoCapacity, String consumables, String mglt, String starshipClass, String hyperdriveRating, ArrayList<String> pilotsUrls, ArrayList<String> filmsUrls) {
+    public Starship(String created, String edited, String url, String name, String model, String manufacturer, String costInCredits, String length, String crew, String passengers, String maxAtmospheringSpeed, String cargoCapacity, String consumables, String mglt, String starshipClass, String hyperdriveRating, ArrayList<String> pilotsUrls, ArrayList<String> filmsUrls) {
         super(created, edited, url);
         this.name = name;
         this.model = model;
-        this.vehicleClass = vehicleClass;
         this.manufacturer = manufacturer;
         this.costInCredits = costInCredits;
         this.length = length;
@@ -52,24 +49,12 @@ public class Starship extends SwapiEntry implements Serializable {
         this.filmsUrls = filmsUrls;
     }
 
-    public int getStarship_id() {
-        return starship_id;
-    }
-
-    public void setStarship_id(int starship_id) {
-        this.starship_id = starship_id;
-    }
-
     public String getName() {
         return name;
     }
 
     public String getModel() {
         return model;
-    }
-
-    public String getVehicleClass() {
-        return vehicleClass;
     }
 
     public String getManufacturer() {
@@ -122,5 +107,26 @@ public class Starship extends SwapiEntry implements Serializable {
 
     public ArrayList<String> getFilmsUrls() {
         return filmsUrls;
+    }
+
+    @Override
+    public String toString() {
+        return "Starship{" +
+                ", name='" + name + '\'' +
+                ", model='" + model + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", costInCredits='" + costInCredits + '\'' +
+                ", length='" + length + '\'' +
+                ", crew='" + crew + '\'' +
+                ", passengers='" + passengers + '\'' +
+                ", maxAtmospheringSpeed='" + maxAtmospheringSpeed + '\'' +
+                ", cargoCapacity='" + cargoCapacity + '\'' +
+                ", consumables='" + consumables + '\'' +
+                ", mglt='" + mglt + '\'' +
+                ", starshipClass='" + starshipClass + '\'' +
+                ", hyperdriveRating='" + hyperdriveRating + '\'' +
+                ", pilotsUrls=" + pilotsUrls +
+                ", filmsUrls=" + filmsUrls +
+                '}';
     }
 }

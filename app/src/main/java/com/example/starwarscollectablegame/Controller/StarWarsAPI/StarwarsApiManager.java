@@ -23,6 +23,10 @@ public class StarwarsApiManager {
         this.queue = Volley.newRequestQueue(context);
     }
 
+    public void getSwapiEntryPage(final SwapiEntryPageListener listener, final StarWarsDataType type) {
+        getSwapiEntryPage(listener, 1, type);
+    }
+
     public void getSwapiEntryPage(final SwapiEntryPageListener listener, final int pageNumb, final StarWarsDataType type) {
         final JsonRequest request = ApiObjectFactory.getJsonRequest(
                 "https://swapi.co/api/" + type.getDataType() + "/?page=" + pageNumb,
@@ -31,7 +35,6 @@ public class StarwarsApiManager {
                     public void onResponse(JSONObject response) {
                         try {
                             String next = response.getString("next");
-                            Log.e(next, next);
                             String[] splitNext = next.split("=");
                             int nextPageNr;
                             if (splitNext.length < 2) {

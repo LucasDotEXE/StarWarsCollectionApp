@@ -1,5 +1,6 @@
 package com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,11 +11,9 @@ import java.util.ArrayList;
 @Entity(tableName = "planet_table")
 public class Planet extends SwapiEntry implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
-    private int planet_id;
-
-    @ColumnInfo(name = "name")
+    @PrimaryKey @ColumnInfo(name = "name") @NonNull
     private String name;
+
     @ColumnInfo(name = "diameter")
     private String diameter;
     @ColumnInfo(name = "gravity")
@@ -50,14 +49,6 @@ public class Planet extends SwapiEntry implements Serializable {
         this.surfaceWater = surfaceWater;
         this.residentsUrls = residentsUrls;
         this.filmsUrls = filmsUrls;
-    }
-
-    public int getPlanet_id() {
-        return planet_id;
-    }
-
-    public void setPlanet_id(int planet_id) {
-        this.planet_id = planet_id;
     }
 
     public String getName() {
@@ -102,5 +93,22 @@ public class Planet extends SwapiEntry implements Serializable {
 
     public ArrayList<String> getFilmsUrls() {
         return filmsUrls;
+    }
+
+    @Override
+    public String toString() {
+        return "Planet{" +
+                ", name='" + name + '\'' +
+                ", diameter='" + diameter + '\'' +
+                ", gravity='" + gravity + '\'' +
+                ", population='" + population + '\'' +
+                ", climate='" + climate + '\'' +
+                ", terrain='" + terrain + '\'' +
+                ", rotationPeriod='" + rotationPeriod + '\'' +
+                ", orbitalPeriod='" + orbitalPeriod + '\'' +
+                ", surfaceWater='" + surfaceWater + '\'' +
+                ", residentsUrls=" + residentsUrls +
+                ", filmsUrls=" + filmsUrls +
+                '}';
     }
 }

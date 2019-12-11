@@ -1,5 +1,6 @@
 package com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,13 +11,11 @@ import java.util.ArrayList;
 @Entity(tableName = "film_table")
 public class Film extends SwapiEntry implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
-    private int film_id;
+    @PrimaryKey @ColumnInfo(name = "episode_id") @NonNull
+    private int episodeId;
 
     @ColumnInfo(name = "title")
     private String title;
-    @ColumnInfo(name = "episode_id")
-    private int episodeId;
     @ColumnInfo(name = "opening_crawl")
     private String openingCrawl;
     @ColumnInfo(name = "director")
@@ -50,14 +49,6 @@ public class Film extends SwapiEntry implements Serializable {
         this.vehiclesUrls = vehiclesUrls;
         this.planetsUrls = planetsUrls;
         this.charactersUrls = charactersUrls;
-    }
-
-    public int getFilm_id() {
-        return film_id;
-    }
-
-    public void setFilm_id(int film_id) {
-        this.film_id = film_id;
     }
 
     public String getTitle() {
@@ -109,15 +100,15 @@ public class Film extends SwapiEntry implements Serializable {
         return "Film{" +
                 "title='" + title + '\'' +
                 ", episodeId=" + episodeId +
-                ", openingCrawl='" + openingCrawl + '\'' +
-                ", director='" + director + '\'' +
-                ", producer='" + producer + '\'' +
-                ", releaseDate='" + releaseDate + '\'' +
-                ", speciesUrls=" + speciesUrls +
-                ", starshipsUrls=" + starshipsUrls +
-                ", vehiclesUrls=" + vehiclesUrls +
-                ", planetsUrls=" + planetsUrls +
-                ", charactersUrls=" + charactersUrls +
+               // ", openingCrawl='" + openingCrawl + '\'' +
+//                ", director='" + director + '\'' +
+//                ", producer='" + producer + '\'' +
+//                ", releaseDate='" + releaseDate + '\'' +
+//                ", speciesUrls=" + speciesUrls +
+//                ", starshipsUrls=" + starshipsUrls +
+//                ", vehiclesUrls=" + vehiclesUrls +
+//                ", planetsUrls=" + planetsUrls +
+//                ", charactersUrls=" + charactersUrls +
                 '}';
     }
 }

@@ -6,6 +6,8 @@ import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDataba
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import static com.example.starwarscollectablegame.Util.StarwarsFactory.JsonParsingMethods.jsonArrayToStringArray;
 
 public class SpeciesJsonFactory implements SwapiEntryJsonFactory {
@@ -24,28 +26,35 @@ public class SpeciesJsonFactory implements SwapiEntryJsonFactory {
 
     @Override
     public SwapiEntry parseJsonToEntry(JSONObject jsonObject) {
-//        Species species = new Species();
-//
-//        try {
-//            species.setName(jsonObject.getString("name"));
-//            species.setClassification(jsonObject.getString("classification"));
-//            species.setDesignation(jsonObject.getString("designation"));
-//            species.setAverageHeight(jsonObject.getString("average_height"));
-//            species.setSkinColors(jsonObject.getString("skin_colors"));
-//            species.setHairColors(jsonObject.getString("hair_colors"));
-//            species.setEyeColors(jsonObject.getString("eye_colors"));
-//            species.setAverageLifespan(jsonObject.getString("average_lifespan"));
-//            species.setHomeWorld(jsonObject.getString("homeworld"));
-//            species.setLanguage(jsonObject.getString("language"));
-//
-//            species.setPeopleUrls(jsonArrayToStringArray(jsonObject.getJSONArray("people")));
-//            species.setFilmsUrls(jsonArrayToStringArray(jsonObject.getJSONArray("films")));
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return species;
+
+        try {
+            String created = jsonObject.getString("created");
+            String edited = jsonObject.getString("edited");
+            String url = jsonObject.getString("url");
+
+            String name = jsonObject.getString("name");
+            String classification = jsonObject.getString("classification");
+            String designation = jsonObject.getString("designation");
+            String averageHeight = jsonObject.getString("average_height");
+            String skinColors = jsonObject.getString("skin_colors");
+            String hairColors = jsonObject.getString("hair_colors");
+            String eyeColors = jsonObject.getString("eye_colors");
+            String averageLifespan = jsonObject.getString("average_lifespan");
+            String homeworld = jsonObject.getString("homeworld");
+            String language = jsonObject.getString("language");
+
+            ArrayList<String> people = jsonArrayToStringArray(jsonObject.getJSONArray("people"));
+            ArrayList<String> films = jsonArrayToStringArray(jsonObject.getJSONArray("films"));
+
+            return new Species(created, edited, url,
+                    name, classification, designation,
+                    averageHeight, averageLifespan,
+                    eyeColors, hairColors,
+                    skinColors, homeworld,
+                    language, people, films);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

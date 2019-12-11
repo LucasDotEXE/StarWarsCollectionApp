@@ -1,5 +1,6 @@
 package com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,15 +8,12 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-@Entity(tableName = "vehicle_table")
+@Entity(tableName = "vehicle_table", primaryKeys = {"name", "model"})
 public class Vehicle extends SwapiEntry implements Serializable {
 
-    @PrimaryKey(autoGenerate = true)
-    private int vehicle_id;
-
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "name") @NonNull
     private String name;
-    @ColumnInfo(name = "model")
+    @ColumnInfo(name = "model") @NonNull
     private String model;
     @ColumnInfo(name = "vehicle_class")
     private String vehicleClass;
@@ -56,14 +54,6 @@ public class Vehicle extends SwapiEntry implements Serializable {
         this.consumables = consumables;
         this.pilotsUrls = pilotsUrls;
         this.filmsUrls = filmsUrls;
-    }
-
-    public int getVehicle_id() {
-        return vehicle_id;
-    }
-
-    public void setVehicle_id(int vehicle_id) {
-        this.vehicle_id = vehicle_id;
     }
 
     public String getName() {
@@ -116,5 +106,24 @@ public class Vehicle extends SwapiEntry implements Serializable {
 
     public ArrayList<String> getFilmsUrls() {
         return filmsUrls;
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                ", name='" + name + '\'' +
+                ", model='" + model + '\'' +
+                ", vehicleClass='" + vehicleClass + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", costInCredits='" + costInCredits + '\'' +
+                ", length='" + length + '\'' +
+                ", crew='" + crew + '\'' +
+                ", passengers='" + passengers + '\'' +
+                ", maxAtmospheringSpeed='" + maxAtmospheringSpeed + '\'' +
+                ", cargoCapacity='" + cargoCapacity + '\'' +
+                ", consumables='" + consumables + '\'' +
+                ", pilotsUrls=" + pilotsUrls +
+                ", filmsUrls=" + filmsUrls +
+                '}';
     }
 }

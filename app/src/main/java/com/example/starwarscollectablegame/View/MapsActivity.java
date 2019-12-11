@@ -6,18 +6,21 @@ import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.StarwarsApiManager;
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryListener;
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryPageListener;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.People;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Planet;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Species;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.StarWarsDataType;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Starship;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Vehicle;
 import com.example.starwarscollectablegame.R;
-import com.example.starwarscollectablegame.ViewModel.StarWarsViewModel;
+import com.example.starwarscollectablegame.ViewModel.swDatabaseViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,12 +32,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, SwapiEntryListener, SwapiEntryPageListener {
 
+    private static final String TAG = "MapsActivity";
+
     private GoogleMap mMap;
 
-    private StarWarsViewModel starWarsViewModel;
+    private swDatabaseViewModel swDatabaseViewModel;
 
     private StarwarsApiManager apiManager;
 
@@ -42,6 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -54,19 +61,59 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        apiManager.getSwapiEntry(this, 7, StarWarsDataType.STARSHIP);
 //        apiManager.getSwapiEntry(this, 7, StarWarsDataType.VIHICLE);
 
-//        apiManager.getSwapiEntryPage(this, 1, StarWarsDataType.FILM);
+        apiManager.getSwapiEntryPage(this, StarWarsDataType.VIHICLE);
 
         mapFragment.getMapAsync(this);
 
-        this.starWarsViewModel = ViewModelProviders.of(this).get(StarWarsViewModel.class);
-        this.starWarsViewModel.getAllFilms().observe(this, new Observer<List<Film>>() {
+        //
+        this.swDatabaseViewModel = ViewModelProviders.of(this).get(swDatabaseViewModel.class);
+        this.swDatabaseViewModel.getAllFilms().observe(this, new Observer<List<Film>>() {
             @Override
             public void onChanged(List<Film> films) {
-                for (Film film : films) {
-                    Log.i("EWA", film.toString());
+
+            }
+        });
+
+        this.swDatabaseViewModel.getAllPeople().observe(this, new Observer<List<People>>() {
+            @Override
+            public void onChanged(List<People> people) {
+
+            }
+        });
+
+        this.swDatabaseViewModel.getAllPlanet().observe(this, new Observer<List<Planet>>() {
+            @Override
+            public void onChanged(List<Planet> people) {
+
+            }
+        });
+
+        this.swDatabaseViewModel.getAllSpecies().observe(this, new Observer<List<Species>>() {
+            @Override
+            public void onChanged(List<Species> people) {
+
+            }
+        });
+
+        this.swDatabaseViewModel.getAllStarship().observe(this, new Observer<List<Starship>>() {
+            @Override
+            public void onChanged(List<Starship> people) {
+                for (Starship person : people) {
+                    Log.i(TAG, person.toString());
                 }
             }
         });
+
+        this.swDatabaseViewModel.getAllVehicle().observe(this, new Observer<List<Vehicle>>() {
+            @Override
+            public void onChanged(List<Vehicle> people) {
+                for (Vehicle person : people) {
+                    Log.i(TAG, person.toString());
+                }
+            }
+        });
+        //this.swDatabaseViewModel.deleteAllFilms();
+        //
     }
 
 
@@ -152,43 +199,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onSwapiEntryPageListener(ArrayList<SwapiEntry> entries, StarWarsDataType type, int nextPage) {
-//        switch (type) {
-//            case FILM: {
-//                for (SwapiEntry entry : entries) {
-//                    Film film = (Film) entry;
-//                    this.starWarsViewModel.insert(film);
-//                }
-//                break;
-//            }
-//            case PEOPLE: {
-////                Log.e("TEST", ((People) object).toString());
-//                break;
-//            }
-//            case PLANET: {
-////                Log.e("TEST", ((Planet) object).toString());
-//                break;
-//            }
-//            case SPECIES: {
-//                for (SwapiEntry entry : entries) {
-//                    Log.e("TEST", ((Species) entry).toString());
-//                }
-//                break;
-//            }
-//            case VIHICLE: {
-////                Log.e("TEST", ((Vehicle) object).toString());
-//                break;
-//            }
-//            case STARSHIP: {
-////                Log.e("TEST", ((Starship) object).toString());
-//                break;
-//            }
-//        }
+        switch (type) {
+            case FILM: {
+                for (SwapiEntry entry : entries) {
+                    Film film = (Film) entry;
+                    this.swDatabaseViewModel.insert(film);
+                }
+                break;
+            }
+            case PEOPLE: {
+                for (SwapiEntry entry : entries) {
+                    People film = (People) entry;
+                    this.swDatabaseViewModel.insert(film);
+                }
+                break;
+            }
+            case PLANET: {
+                for (SwapiEntry entry : entries) {
+                    Planet film = (Planet) entry;
+                    this.swDatabaseViewModel.insert(film);
+                }
+                break;
+            }
+            case SPECIES: {
+                for (SwapiEntry entry : entries) {
+                    Species film = (Species) entry;
+                    this.swDatabaseViewModel.insert(film);
+                }
+                break;
+            }
+            case VIHICLE: {
+                for (SwapiEntry entry : entries) {
+                    Vehicle film = (Vehicle) entry;
+                    this.swDatabaseViewModel.insert(film);
+                }
+                break;
+            }
+            case STARSHIP: {
+                for (SwapiEntry entry : entries) {
+                    Starship film = (Starship) entry;
+                    this.swDatabaseViewModel.insert(film);
+                }
+                break;
+            }
+        }
         if (nextPage != -1) {
             apiManager.getSwapiEntryPage(this, nextPage, type);
-        } else {
-            for (Film film : starWarsViewModel.getAllFilms().getValue()) {
-                Log.e("EWA", film.toString());
-            }
         }
     }
 

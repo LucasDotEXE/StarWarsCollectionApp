@@ -6,6 +6,8 @@ import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDataba
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import static com.example.starwarscollectablegame.Util.StarwarsFactory.JsonParsingMethods.jsonArrayToStringArray;
 
 public class PeopleJsonFactory implements SwapiEntryJsonFactory {
@@ -23,30 +25,32 @@ public class PeopleJsonFactory implements SwapiEntryJsonFactory {
     }
     @Override
     public SwapiEntry parseJsonToEntry(JSONObject jsonObject) {
-//        People person = new People();
-//
-//        try {
-//            person.setName(jsonObject.getString("name"));
-//            person.setHeight(jsonObject.getString("height"));
-//            person.setMass(jsonObject.getString("mass"));
-//            person.setHairColor(jsonObject.getString("hair_color"));
-//            person.setSkinColor(jsonObject.getString("skin_color"));
-//            person.setEyeColor(jsonObject.getString("eye_color"));
-//            person.setBirthYear(jsonObject.getString("birth_year"));
-//            person.setGender(jsonObject.getString("gender"));
-//            person.setHomeWorldUrl(jsonObject.getString("homeworld"));
-//
-//            person.setFilmsUrls(jsonArrayToStringArray(jsonObject.getJSONArray("films")));
-//            person.setSpeciesUrls(jsonArrayToStringArray(jsonObject.getJSONArray("species")));
-//            person.setVehiclesUrls(jsonArrayToStringArray(jsonObject.getJSONArray("vehicles")));
-//            person.setStarshipsUrls(jsonArrayToStringArray(jsonObject.getJSONArray("starships")));
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        return person;
+
+        try {
+            String created = jsonObject.getString("created");
+            String edited = jsonObject.getString("edited");
+            String url = jsonObject.getString("url");
+
+            String name = jsonObject.getString("name");
+            String height = jsonObject.getString("height");
+            String mass = jsonObject.getString("mass");
+            String hairColor = jsonObject.getString("hair_color");
+            String skinColor = jsonObject.getString("skin_color");
+            String eyeColor =  jsonObject.getString("eye_color");
+            String birthYear = jsonObject.getString("birth_year");
+            String gender = jsonObject.getString("gender");
+            String homeWorld = jsonObject.getString("homeworld");
+
+            ArrayList<String> films = jsonArrayToStringArray(jsonObject.getJSONArray("films"));
+            ArrayList<String> species = jsonArrayToStringArray(jsonObject.getJSONArray("species"));
+            ArrayList<String> vehicles = jsonArrayToStringArray(jsonObject.getJSONArray("vehicles"));
+            ArrayList<String> starships = jsonArrayToStringArray(jsonObject.getJSONArray("starships"));
+
+            return new People(created, edited, url, name, eyeColor, birthYear, gender, hairColor, height, homeWorld, mass, skinColor,
+                    films, species, starships, vehicles);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

@@ -6,6 +6,8 @@ import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDataba
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import static com.example.starwarscollectablegame.Util.StarwarsFactory.JsonParsingMethods.jsonArrayToStringArray;
 
 public class PlanetJsonFactory implements SwapiEntryJsonFactory {
@@ -24,27 +26,31 @@ public class PlanetJsonFactory implements SwapiEntryJsonFactory {
 
     @Override
     public SwapiEntry parseJsonToEntry(JSONObject jsonObject) {
-//        Planet planet = new Planet();
-//
-//        try {
-//            planet.setName(jsonObject.getString("name"));
-//            planet.setRotationPeriod(jsonObject.getString("rotation_period"));
-//            planet.setOrbitalPeriod(jsonObject.getString("orbital_period"));
-//            planet.setDiameter(jsonObject.getString("diameter"));
-//            planet.setClimate(jsonObject.getString("climate"));
-//            planet.setGravity(jsonObject.getString("gravity"));
-//            planet.setTerrain(jsonObject.getString("terrain"));
-//            planet.setSurfaceWater(jsonObject.getString("surface_water"));
-//            planet.setPopulation(jsonObject.getString("population"));
-//
-//            planet.setResidentsUrls(jsonArrayToStringArray(jsonObject.getJSONArray("residents")));
-//            planet.setFilmsUrls(jsonArrayToStringArray(jsonObject.getJSONArray("films")));
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return planet;
+
+        try {
+            String created = jsonObject.getString("created");
+            String edited = jsonObject.getString("edited");
+            String url = jsonObject.getString("url");
+
+            String name = jsonObject.getString("name");
+            String rotationPeriod = jsonObject.getString("rotation_period");
+            String orbital_period = jsonObject.getString("orbital_period");
+            String diameter = jsonObject.getString("diameter");
+            String climate = jsonObject.getString("climate");
+            String gravity = jsonObject.getString("gravity");
+            String terrain = jsonObject.getString("terrain");
+            String surface_water = jsonObject.getString("surface_water");
+            String population = jsonObject.getString("population");
+
+            ArrayList<String> residents = jsonArrayToStringArray(jsonObject.getJSONArray("residents"));
+            ArrayList<String> films = jsonArrayToStringArray(jsonObject.getJSONArray("films"));
+
+
+            return new Planet(created, edited, url, name, diameter, gravity, population, climate, terrain, rotationPeriod, orbital_period, surface_water,
+            residents, films);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
