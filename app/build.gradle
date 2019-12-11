@@ -31,6 +31,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //lifeCycle
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     androidTestImplementation "androidx.test.ext:junit:$lifecycle_version"
     //rooms
     annotationProcessor "androidx.room:room-compiler:$room_version"
@@ -45,4 +46,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
