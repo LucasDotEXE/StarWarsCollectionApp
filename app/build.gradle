@@ -35,6 +35,8 @@ dependencies {
     //rooms
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
+    //splash Screen
+    implementation 'gr.pantrif:easy-android-splash-screen:0.0.1'
     //
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
