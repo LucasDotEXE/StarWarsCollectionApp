@@ -61,7 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        apiManager.getSwapiEntry(this, 7, StarWarsDataType.STARSHIP);
 //        apiManager.getSwapiEntry(this, 7, StarWarsDataType.VIHICLE);
 
-        apiManager.getSwapiEntryPage(this, StarWarsDataType.VIHICLE);
+        //apiManager.getSwapiEntryPage(this, StarWarsDataType.VIHICLE);
 
         mapFragment.getMapAsync(this);
 
