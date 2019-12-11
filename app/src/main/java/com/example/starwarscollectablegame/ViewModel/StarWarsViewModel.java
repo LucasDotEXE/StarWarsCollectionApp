@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Planet;
 
 import java.util.List;
 
@@ -33,6 +34,10 @@ public class StarWarsViewModel extends AndroidViewModel {
 
     public void delete(Film film) {
         this.repository.deleteFilm(film);
+    }
+
+    public List<Planet> getPlanetByUrl(String url) {
+        return this.repository.getPlanetByUrl(url);
     }
 
     public LiveData<List<Film>> getAllFilms() {

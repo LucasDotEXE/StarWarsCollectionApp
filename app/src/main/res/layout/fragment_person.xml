@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.DetailFragments.PersonFragment">
+
+    <TextView
+        android:id="@+id/people_fragment_eyecolor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/people_fragment_birthyear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/people_fragment_birthyear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/people_fragment_gender"
+        app:layout_constraintStart_toStartOf="@+id/people_fragment_eyecolor"
+        app:layout_constraintTop_toBottomOf="@+id/people_fragment_eyecolor" />
+
+    <TextView
+        android:id="@+id/people_fragment_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/people_fragment_haircolor"
+        app:layout_constraintStart_toStartOf="@+id/people_fragment_birthyear"
+        app:layout_constraintTop_toBottomOf="@+id/people_fragment_birthyear" />
+
+    <TextView
+        android:id="@+id/people_fragment_haircolor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/people_fragment_height"
+        app:layout_constraintStart_toStartOf="@+id/people_fragment_gender"
+        app:layout_constraintTop_toBottomOf="@+id/people_fragment_gender" />
+
+    <TextView
+        android:id="@+id/people_fragment_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/people_fragment_homeworld"
+        app:layout_constraintStart_toStartOf="@+id/people_fragment_haircolor"
+        app:layout_constraintTop_toBottomOf="@+id/people_fragment_haircolor" />
+
+    <TextView
+        android:id="@+id/people_fragment_homeworld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/people_fragment_mass"
+        app:layout_constraintStart_toStartOf="@+id/people_fragment_height"
+        app:layout_constraintTop_toBottomOf="@+id/people_fragment_height" />
+
+    <TextView
+        android:id="@+id/people_fragment_mass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/people_fragment_homeworld"
+        app:layout_constraintTop_toBottomOf="@+id/people_fragment_homeworld" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

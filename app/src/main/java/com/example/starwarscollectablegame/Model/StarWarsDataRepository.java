@@ -7,8 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.BaseStarWarsDao;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.FilmDao;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.PlanetDao;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarWarsDatabase;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Planet;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class StarWarsDataRepository {
 
     private FilmDao filmDao;
     private LiveData<List<Film>> allFilms;
+    private PlanetDao planetDao;
 
     public StarWarsDataRepository(Application application) {
         StarWarsDatabase database = StarWarsDatabase.getInstance(application);
@@ -39,7 +42,9 @@ public class StarWarsDataRepository {
         new DeleteAsyncTask<Film>(this.filmDao).execute(film);
     }
 
-
+    public List<Planet> getPlanetByUrl(String url) {
+        return  this.planetDao.getPlanetsByUtl(url);
+    }
 
     private static class InsertAsyncTask<T> extends AsyncTask<T, Void, Void> {
 
