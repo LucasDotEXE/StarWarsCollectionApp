@@ -19,4 +19,8 @@
     <string name="menu_Species">Species</string>
     <string name="menu_Starships">Starships</string>
     <string name="menu_Vehicles">Vehicles</string>
+
+    <string name="preferences_theme_use_sith">useSith</string>
+    <string name="preference_id">123hihihi</string>
+
 </resources>

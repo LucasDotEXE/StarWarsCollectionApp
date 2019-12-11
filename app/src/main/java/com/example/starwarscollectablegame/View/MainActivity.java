@@ -1,10 +1,12 @@
 package com.example.starwarscollectablegame.View;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.starwarscollectablegame.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
@@ -29,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.preference_id), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+//        editor.putBoolean(getString(R.string.prefrences_theme_use_sith), true).apply();
+        setTheme(sharedPref.getBoolean(getString(R.string.preferences_theme_use_sith), false) ? R.style.AppThemeSith_NoActionBar : R.style.AppThemeJedi_NoActionBar );
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -36,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(intent);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -45,10 +55,11 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_map, R.id.nav_collection, R.id.nav_profile, R.id.nav_film)
+                R.id.nav_map, R.id.nav_collection, R.id.nav_profile, R.id.nav_film, R.id.nav_settings)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController.navigate(R.id.nav_settings);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
