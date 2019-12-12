@@ -81,7 +81,7 @@ public class PersonFragment extends Fragment {
         TextView homeworld = view.findViewById(R.id.people_fragment_homeworld);
         TextView mass = view.findViewById(R.id.people_fragment_mass);
 
-        homeworld.setText(people.hom);
+        homeworld.setText(people.getHomeWorldUrl());
         if (level > 1){
 
         }

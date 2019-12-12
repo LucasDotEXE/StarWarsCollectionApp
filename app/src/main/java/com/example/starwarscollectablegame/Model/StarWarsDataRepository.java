@@ -80,11 +80,6 @@ public class StarWarsDataRepository {
         new DeleteAllNotesAsyncTask(filmDao).execute();
     }
 
-
-    public List<Planet> getPlanetByUrl(String url) {
-        return  this.planetDao.getPlanetsByUtl(url);
-    }
-
     public LiveData<List<Film>> getAllFilms() {
         return allFilms;
     }
