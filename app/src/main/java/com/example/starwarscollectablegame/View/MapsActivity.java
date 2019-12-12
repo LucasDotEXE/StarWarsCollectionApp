@@ -148,7 +148,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // in a raw resource file.
             boolean success = googleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.sith_style_json));
+                            this, R.raw.jedi_style_json));
+//                            this, R.raw.sith_style_json));
 //                            this, R.raw.test));
 
             if (!success) {

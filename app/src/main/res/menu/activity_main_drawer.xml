@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_map"
+            android:title="@string/menu_Map" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_Profile" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/menu_Settings"/>
+        <item
+            android:id="@+id/nav_collection"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_Collection" />
+
+        <item android:title="@string/menu_Collection">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_film"
+                        android:icon="@drawable/ic_menu_send"
+                        android:title="@string/menu_Film" />
+                    <item
+                        android:id="@+id/nav_people"
+                        android:icon="@drawable/ic_menu_send"
+                        android:title="@string/menu_People" />
+                    <item
+                        android:id="@+id/nav_planet"
+                        android:icon="@drawable/ic_menu_send"
+                        android:title="@string/menu_Planet" />
+                    <item
+                        android:id="@+id/nav_species"
+                        android:icon="@drawable/ic_menu_send"
+                        android:title="@string/menu_Species" />
+                    <item
+                        android:id="@+id/nav_starships"
+                        android:icon="@drawable/ic_menu_send"
+                        android:title="@string/menu_Starships" />
+                    <item
+                        android:id="@+id/nav_vehicle"
+                        android:icon="@drawable/ic_menu_send"
+                        android:title="@string/menu_Vehicles" />
+                </group>
+            </menu>
+        </item>
+    </group>
+</menu>
+
+
+
+

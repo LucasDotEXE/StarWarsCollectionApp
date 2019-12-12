@@ -1,7 +1,26 @@
 <resources>
     <string name="app_name">StarwarsCollectableGame</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_Map">Map</string>
+    <string name="menu_Settings">Settings</string>
+    <string name="menu_Collection">Collection</string>
+    <string name="menu_Profile">Profile</string>
+    <string name="menu_Film">Film</string>
+    <string name="menu_People">People</string>
+    <string name="menu_Planet">Planet</string>
+    <string name="menu_Species">Species</string>
+    <string name="menu_Starships">Starships</string>
+    <string name="menu_Vehicles">Vehicles</string>
+
+    <string name="preferences_theme_use_sith">useSith</string>
+    <string name="preference_id">123hihihi</string>
+
 </resources>

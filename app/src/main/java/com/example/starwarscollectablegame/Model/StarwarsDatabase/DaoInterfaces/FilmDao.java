@@ -11,7 +11,7 @@ import java.util.List;
 @Dao
 public interface FilmDao extends BaseStarWarsDao<Film>{
 
-    @Query("SELECT * FROM film_table ORDER BY episode_id DESC")
+    @Query("SELECT * FROM film_table ORDER BY episode_id ASC")
     LiveData<List<Film>> getAllFilms();
 
     @Query("DELETE FROM film_table")

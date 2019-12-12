@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimarySith">#BA000000</color>
+    <color name="colorPrimaryDarkSith">#000000</color>
+    <color name="colorAccentSith">#ff0000</color>
+    <color name="colorPrimaryJedi">#9a3015</color>
+    <color name="colorPrimaryDarkJedi">	#450f01</color>
+    <color name="colorAccentJedi">#3cd6e6</color>
 </resources>
