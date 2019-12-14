@@ -39,6 +39,8 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 editor.putBoolean(getString(R.string.preferences_theme_use_sith),
                         isChecked).apply();
+                editor.putBoolean(getString(R.string.preferences_theme_open_settings),
+                        true).apply();
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
             }

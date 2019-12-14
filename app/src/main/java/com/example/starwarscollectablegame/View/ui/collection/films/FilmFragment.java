@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
-import com.example.starwarscollectablegame.View.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +25,8 @@ public class FilmFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_film, container, false);
+        View root = inflater.inflate(R.layout.fragment_collection_film, container, false);
         filmViewModel = ViewModelProviders.of(this).get(FilmViewModel.class);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-//        filmViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
 
         final RecyclerView recyclerView = root.findViewById(R.id.filmRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

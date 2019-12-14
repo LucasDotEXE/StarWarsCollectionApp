@@ -42,24 +42,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(intent);
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_map, R.id.nav_collection, R.id.nav_profile, R.id.nav_film, R.id.nav_settings)
+                R.id.nav_map, R.id.nav_collection, R.id.nav_profile, R.id.nav_settings, R.id.nav_film, R.id.nav_people)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        navController.navigate(R.id.nav_settings);
+
+        if (sharedPref.getBoolean(getString(R.string.preferences_theme_open_settings), false)) {
+            navController.navigate(R.id.nav_settings);
+            editor.putBoolean(getString(R.string.preferences_theme_open_settings), false).apply();
+        } else {
+            navController.navigate(R.id.nav_map);
+        }
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }

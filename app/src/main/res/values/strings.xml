@@ -21,6 +21,7 @@
     <string name="menu_Vehicles">Vehicles</string>
 
     <string name="preferences_theme_use_sith">useSith</string>
+    <string name="preferences_theme_open_settings">openSettings</string>
     <string name="preference_id">123hihihi</string>
 
 </resources>
