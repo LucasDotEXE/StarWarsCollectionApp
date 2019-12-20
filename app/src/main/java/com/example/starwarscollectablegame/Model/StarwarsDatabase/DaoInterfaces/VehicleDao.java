@@ -12,6 +12,10 @@ import java.util.List;
 @Dao
 public interface VehicleDao extends BaseStarWarsDao<Vehicle> {
 
-    @Query("SELECT * FROM vehicle_table ORDER BY name DESC")
+    @Query("SELECT * FROM vehicle_table ORDER BY name ASC")
     LiveData<List<Vehicle>> getAllVehicle();
+
+    @Override
+    @Query("DELETE FROM vehicle_table")
+    void deleteAll();
 }

@@ -12,6 +12,10 @@ import java.util.List;
 @Dao
 public interface PeopleDao extends BaseStarWarsDao<People> {
 
-    @Query("SELECT * FROM people_table ORDER BY name DESC")
+    @Query("SELECT * FROM people_table ORDER BY name ASC")
     LiveData<List<People>> getAllPeople();
+
+    @Override
+    @Query("DELETE FROM people_table")
+    void deleteAll();
 }

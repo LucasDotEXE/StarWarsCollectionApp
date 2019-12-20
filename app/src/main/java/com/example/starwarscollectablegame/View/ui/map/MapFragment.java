@@ -3,8 +3,6 @@ package com.example.starwarscollectablegame.View.ui.map;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,21 +12,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -36,12 +36,20 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    private static final String TAG = "ODO APP";
+    private static final String TAG = "MapFragment";
     private final int PERMISSION_REQUEST_CODE = 698;
     final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
 
+    private ArrayList<Marker> markers = new ArrayList<>();
+    private LatLng yourPosition = new LatLng(0,0);
 
     private LocationListener listener;
     private LocationManager locManager;
@@ -54,10 +62,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private Marker locationMarker;
 
+    MapViewModel viewModel;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
+        viewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+
+        viewModel.getFilmCollection().observe(this, new Observer<List<FilmCollection>>() {
+            @Override
+            public void onChanged(List<FilmCollection> filmCollections) {
+                for (FilmCollection filmCollection : filmCollections) {
+                    Log.d("TEST ONCREATE MAPFRAG", filmCollection.toString());
+                }
+            }
+        });
+        viewModel.getAllFilms().observe(this, new Observer<List<Film>>() {
+            @Override
+            public void onChanged(List<Film> films) {
+                Log.wtf(TAG, films.toString());
+                for (Film film : films) {
+//                    viewModel.updateFilmColletion(new FilmCollection(1, "Test", film.getEpisodeId(), 0, 0));
+                }
+            }
+        });
 
 //        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.fragment_map);
 //        getFragmentManager().findFragmentById(R.id.fragment_map);
@@ -77,34 +106,56 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         setAdapter(new InfoWindowAdapter(getActivity()));
 
+        final LifecycleOwner lifecycleOwner = this;
         this.mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                MarkerHandler.getInstance().handleMarkerClicked(marker, getContext());
+                MarkerHandler.getInstance().handleMarkerClicked(marker, getContext(), lifecycleOwner, viewModel.getHelperRepo());
             }
         });
 
-//        int height = 150;
-//        int width = 150;
-//        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.ic_hooded);
-//        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-//        BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
-//        LatLng avans = new LatLng(51.5773462, 4.7962926);
-//        MarkerOptions markerOptions = new MarkerOptions().position(avans)
-//                .title("Marker in Avans")
-//                .icon(smallMarkerIcon);
-//        mMap.addMarker(markerOptions);
-//        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(avans).tilt(45).build()));
-
-
-
+        /*set map appearance and behaviour*/
         setMapSettings();
         updateMapStyle();
 
         //Track Location
         setLocationListener();
         trackDistance();
+
+        //starts random spawning of markers
+        startSpawning();
     }
+
+    private void startSpawning() {
+        spawnHandler = new Handler();
+        spawnHandler.post(spawnNewCollectionMarker);
+    }
+    private Handler spawnHandler;
+    private Runnable spawnNewCollectionMarker = new Runnable() {
+        @Override
+        public void run() {
+            int min = 0;
+            int sec = 5;
+
+            int timeInMs = sec * 1000 + min * 60000;
+            spawnHandler.postDelayed(spawnNewCollectionMarker, timeInMs);
+
+            if (markers.size() >= 5) {
+                Marker marker = markers.get(0);
+                marker.remove();
+                markers.remove(marker);
+
+            }
+            try {
+                markers.add(
+                        mMap.addMarker(
+                                MarkerHandler.getInstance().getRandomHiddenMarker(yourPosition ,
+                                        getResources())));
+            } catch (IllegalStateException ex) {
+                Log.w(TAG, "UnstableTimerMethod replaced with new one");
+            }
+        }
+    };
 
     private void setAdapter(GoogleMap.InfoWindowAdapter adapter) {
         mMap.setInfoWindowAdapter(adapter);
@@ -150,7 +201,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 }
                 distanceInMeters += location.distanceTo(lastLocation);
                 lastLocation = location;
-                Log.wtf(TAG, location.getLatitude() + " " + location.getLongitude());
+                Log.i(TAG, location.getLatitude() + " " + location.getLongitude());
                 updatePositionMarker(location);
             }
 
@@ -173,8 +224,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private void updatePositionMarker(Location location) {
 
         final LatLng yourPosition = new LatLng(location.getLatitude(), location.getLongitude());
-
-        MarkerOptions markerOptions = MarkerHandler.getInstance().getRandomHiddenMarker(yourPosition, getResources());
+        this.yourPosition = yourPosition;
+        MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, getResources());
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 

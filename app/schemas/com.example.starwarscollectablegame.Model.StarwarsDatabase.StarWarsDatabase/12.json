@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
-    "identityHash": "c22fdba3c33a08c7e9a07a892fd08933",
+    "version": 12,
+    "identityHash": "46992d15fada82dbd9a255e1b9e73463",
     "entities": [
       {
         "tableName": "film_table",
@@ -650,13 +650,19 @@
       },
       {
         "tableName": "film_collection",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`player_id` INTEGER NOT NULL, `film_id` INTEGER NOT NULL, `level` INTEGER NOT NULL, PRIMARY KEY(`player_id`, `film_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`player_id` INTEGER NOT NULL, `player_name` TEXT, `film_id` INTEGER NOT NULL, `level` INTEGER NOT NULL, `exp` INTEGER NOT NULL, PRIMARY KEY(`player_id`, `film_id`))",
         "fields": [
           {
             "fieldPath": "player_id",
             "columnName": "player_id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "player_name",
+            "columnName": "player_name",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "film_id",
@@ -667,6 +673,12 @@
           {
             "fieldPath": "level",
             "columnName": "level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exp",
+            "columnName": "exp",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -685,7 +697,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c22fdba3c33a08c7e9a07a892fd08933')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '46992d15fada82dbd9a255e1b9e73463')"
     ]
   }
 }

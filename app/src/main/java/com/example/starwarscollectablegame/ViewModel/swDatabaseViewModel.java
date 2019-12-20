@@ -39,10 +39,6 @@ public class swDatabaseViewModel extends AndroidViewModel {
 
     }
 
-    public void deleteAllFilms() {
-        this.repository.deleteAllFilms();
-    }
-
     public void insert(Film film) {
         this.repository.filmDatabaseEditor.insert(film);
     }
@@ -113,10 +109,6 @@ public class swDatabaseViewModel extends AndroidViewModel {
 
     public void delete(Vehicle vehicle) {
         this.repository.vehicleDatabaseEditor.delete(vehicle);
-    }
-
-    public List<Planet> getPlanetByUrl(String url) {
-        return this.repository.getPlanetByUrl(url);
     }
 
     public LiveData<List<Film>> getAllFilms() {

@@ -12,6 +12,10 @@ import java.util.List;
 @Dao
 public interface StarshipDao extends BaseStarWarsDao<Starship> {
 
-    @Query("SELECT * FROM starship_table ORDER BY name DESC")
+    @Query("SELECT * FROM starship_table ORDER BY name ASC")
     LiveData<List<Starship>> getAllStarship();
+
+    @Override
+    @Query("DELETE FROM starship_table")
+    void deleteAll();
 }

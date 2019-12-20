@@ -20,8 +20,9 @@
     <string name="menu_Starships">Starships</string>
     <string name="menu_Vehicles">Vehicles</string>
 
+    <string name="preference_id">123hihihi</string>
     <string name="preferences_theme_use_sith">useSith</string>
     <string name="preferences_theme_open_settings">openSettings</string>
-    <string name="preference_id">123hihihi</string>
-
+    <string name="preferences_database_loaded">databaseLoaded</string>
+    <string name="preferences_player_id">playerId</string>
 </resources>

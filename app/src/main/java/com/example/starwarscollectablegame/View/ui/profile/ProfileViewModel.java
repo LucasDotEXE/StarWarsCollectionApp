@@ -1,19 +1,25 @@
 package com.example.starwarscollectablegame.View.ui.profile;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ProfileViewModel extends ViewModel {
+import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
 
-    private MutableLiveData<String> mText;
+public class ProfileViewModel extends AndroidViewModel {
 
-    public ProfileViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+    private StarWarsDataRepository repository;
+
+    public ProfileViewModel(Application application) {
+        super(application);
+        this.repository = new StarWarsDataRepository(application);
+
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public StarWarsDataRepository getRepository() {
+        return repository;
     }
 }

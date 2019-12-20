@@ -3,6 +3,7 @@ package com.example.starwarscollectablegame.Model.StarwarsDatabase;
 import android.os.AsyncTask;
 
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.BaseStarWarsDao;
+import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.StarWarsDataType;
 import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
 
 public class DatabaseEditHelper<T extends SwapiEntry> {
@@ -24,8 +25,12 @@ public class DatabaseEditHelper<T extends SwapiEntry> {
         new DeleteAsyncTask<T>(this.dao).execute(swapiEntry);
     }
 
+    public void deleteAll() {
+        new DeleteAllAsyncTask<T>(this.dao).execute();
+    }
 
-    private static class InsertAsyncTask<T> extends AsyncTask<T, Void, Void> {
+
+    private static class InsertAsyncTask<T extends SwapiEntry> extends AsyncTask<T, Void, Void> {
 
         private BaseStarWarsDao<T> dao;
 
@@ -40,7 +45,7 @@ public class DatabaseEditHelper<T extends SwapiEntry> {
         }
     }
 
-    private static class UpdateAsyncTask<T> extends AsyncTask<T, Void, Void> {
+    private static class UpdateAsyncTask<T extends SwapiEntry> extends AsyncTask<T, Void, Void> {
 
         private BaseStarWarsDao<T> dao;
 
@@ -55,7 +60,7 @@ public class DatabaseEditHelper<T extends SwapiEntry> {
         }
     }
 
-    private static class DeleteAsyncTask<T> extends AsyncTask<T, Void, Void> {
+    private static class DeleteAsyncTask<T extends SwapiEntry> extends AsyncTask<T, Void, Void> {
 
         private BaseStarWarsDao<T> dao;
 
@@ -66,6 +71,21 @@ public class DatabaseEditHelper<T extends SwapiEntry> {
         @Override
         protected Void doInBackground(T... item) {
             this.dao.delete(item[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllAsyncTask<T extends SwapiEntry> extends AsyncTask<Void, Void, Void> {
+
+        private BaseStarWarsDao<T> dao;
+
+        public DeleteAllAsyncTask(BaseStarWarsDao dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            this.dao.deleteAll();
             return null;
         }
     }

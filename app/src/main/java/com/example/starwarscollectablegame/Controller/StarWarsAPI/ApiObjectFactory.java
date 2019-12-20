@@ -13,6 +13,7 @@ public class ApiObjectFactory {
 
     public static RetryPolicy getRetryPolacy() {
         return new RetryPolicy() {
+            private int i = 0;
             @Override
             public int getCurrentTimeout() {
                 return 5000;
@@ -20,7 +21,8 @@ public class ApiObjectFactory {
 
             @Override
             public int getCurrentRetryCount() {
-                return 5;
+                this.i++;
+                return i;
             }
 
             @Override
