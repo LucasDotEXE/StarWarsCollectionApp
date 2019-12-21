@@ -82,7 +82,15 @@ public class MarkerHandler {
         final FilmCollection collection = filmCollections.get(i);
         int level = collection.getLevel();
         if (level >= 3) {
-            updataRandomFilm(filmCollections, repository, context, lifecycleOwner);
+            int collectiveLevel = 0;
+            for (FilmCollection filmCollection : filmCollections) {
+                collectiveLevel += filmCollection.getLevel();
+            }
+            if (collectiveLevel == filmCollections.size()*3) {
+                Toast.makeText(context, "You have every film maxed", Toast.LENGTH_SHORT).show();
+            } else {
+                updataRandomFilm(filmCollections, repository, context, lifecycleOwner);
+            }
         } else {
             collection.setLevel(level + 1);
             repository.filmCollectionDatabaseEditHelper.update(collection);
