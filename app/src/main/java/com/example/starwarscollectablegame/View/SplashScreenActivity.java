@@ -36,13 +36,14 @@ public class SplashScreenActivity extends AppCompatActivity {
             final StarWarsDataRepository repository = new StarWarsDataRepository(getApplication());
             final LiveData<List<Film>> data =  repository.getAllFilms();
             final LifecycleOwner owner = this;
+            final Context context = this;
             Log.wtf(TAG, sharedPref.getBoolean(getString(R.string.preferences_database_loaded), false) + " = databaseLoaded");
             data.observe(owner, new Observer<List<Film>>() {
                 @Override
                 public void onChanged(List<Film> films) {
                     if (films.isEmpty()) {
                         repository.clearDatabase();
-                        StarWarsDataRepository.fillDatabase(repository);
+                        StarWarsDataRepository.fillDatabase(repository, context);
                     } else {
                         editor.putBoolean(getString(R.string.preferences_database_loaded), true);
                         data.removeObservers(owner);

@@ -16,7 +16,7 @@ public class ApiObjectFactory {
             private int i = 0;
             @Override
             public int getCurrentTimeout() {
-                return 5000;
+                return 500;
             }
 
             @Override

@@ -1,6 +1,7 @@
 package com.example.starwarscollectablegame.Model;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -64,6 +65,10 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
 
     private static StarwarsApiManager apiManager;
 
+    public static StarwarsApiManager getApiManager() {
+        return apiManager;
+    }
+
     private Application application;
 
     public StarWarsDataRepository(Application application) {
@@ -100,10 +105,11 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
 
     }
 
-    public static void fillDatabase(SwapiEntryPageListener listener) {
+    public static void fillDatabase(SwapiEntryPageListener listener, Context context) {
         if (!true) {
             return;
         }
+        StarwarsApiManager apiManager = new StarwarsApiManager(context);
         Log.i(TAG, "Filling database");
         apiManager.getSwapiEntryPage(listener, StarWarsDataType.FILM);
         apiManager.getSwapiEntryPage(listener, StarWarsDataType.PEOPLE);

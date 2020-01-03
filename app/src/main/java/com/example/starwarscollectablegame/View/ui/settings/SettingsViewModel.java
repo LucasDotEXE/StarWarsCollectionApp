@@ -1,19 +1,24 @@
 package com.example.starwarscollectablegame.View.ui.settings;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SettingsViewModel extends ViewModel {
+import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
 
-    private MutableLiveData<String> mText;
+public class SettingsViewModel extends AndroidViewModel {
 
-    public SettingsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is Settings fragment");
+    private StarWarsDataRepository repository;
+
+    public SettingsViewModel(Application application) {
+        super(application);
+        this.repository = new StarWarsDataRepository(application);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public StarWarsDataRepository getRepository() {
+        return repository;
     }
 }

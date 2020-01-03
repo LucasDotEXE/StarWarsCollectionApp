@@ -3,7 +3,7 @@
     <color name="colorPrimarySith">#000000</color>
     <color name="colorPrimaryDarkSith">#BA000000</color>
     <color name="colorAccentSith">#ff0000</color>
-    <color name="colorPrimaryJedi">#196608</color>
-    <color name="colorPrimaryDarkJedi">#640891</color>
-    <color name="colorAccentJedi">#3cd6e6</color>
+    <color name="colorPrimaryJedi">#b7b7b7</color>
+    <color name="colorPrimaryDarkJedi">#cccccc</color>
+    <color name="colorAccentJedi">#3094e9</color>
 </resources>
