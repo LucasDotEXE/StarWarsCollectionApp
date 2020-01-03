@@ -29,11 +29,12 @@ public class StarwarsApiManager {
 
     public void getSwapiEntryPage(final SwapiEntryPageListener listener, final int pageNumb, final StarWarsDataType type) {
         final JsonRequest request = ApiObjectFactory.getJsonRequest(
-                "https://swapi.co/api/" + type.getDataType() + "/?page=" + pageNumb,
+                "https://swapi.co/api/" + type.getDataType().toString() + "/?page=" + pageNumb,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            Log.wtf("sadgfhasiudfhsaoiudfh", response.toString());
                             String next = response.getString("next");
                             String[] splitNext = next.split("=");
                             int nextPageNr;
@@ -55,12 +56,15 @@ public class StarwarsApiManager {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.wtf("ERROR ERROR ERROR", error.getMessage());
                         listener.onSwapiEntryPageError();
                     }
                 }
         );
 
         request.setRetryPolicy(ApiObjectFactory.getRetryPolacy());
+
+        Log.wtf("sdjfhsfdjhsalkfjhldkfjhaslkf", "Json request sendt" + pageNumb + "   type: " + type + "\n " + "https://swapi.co/api/" + type.getDataType().toString() + "/?page=" + pageNumb);
         this.queue.add(request);
     }
 
