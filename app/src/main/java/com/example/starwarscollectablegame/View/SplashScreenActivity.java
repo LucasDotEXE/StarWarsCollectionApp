@@ -9,14 +9,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
 import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
-import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.example.starwarscollectablegame.View.DetailFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,12 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarWarsDatabase;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.People;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 import com.example.starwarscollectablegame.R;
-
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.

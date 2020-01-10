@@ -1,9 +1,7 @@
 package com.example.starwarscollectablegame.Util.StarwarsFactory;
 
-import android.util.Log;
-
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Vehicle;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Vehicle;
 
 import org.json.JSONException;
 import org.json.JSONObject;

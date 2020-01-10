@@ -1,6 +1,5 @@
 package com.example.starwarscollectablegame.View.ui.collection.films;
 
-import android.media.Rating;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +8,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
 import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
 
 import java.util.ArrayList;

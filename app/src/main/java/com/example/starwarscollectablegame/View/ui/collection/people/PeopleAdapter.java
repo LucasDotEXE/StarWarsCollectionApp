@@ -9,10 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.People;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 import com.example.starwarscollectablegame.R;
-import com.example.starwarscollectablegame.View.ui.collection.films.FilmAdapter;
 
 import java.util.List;
 

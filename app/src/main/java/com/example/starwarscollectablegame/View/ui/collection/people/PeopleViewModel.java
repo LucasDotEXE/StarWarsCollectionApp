@@ -6,11 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.People;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 
 import java.util.List;
 

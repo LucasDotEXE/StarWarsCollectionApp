@@ -22,9 +22,8 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
-import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,8 +39,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -151,7 +148,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 markers.add(
                         mMap.addMarker(
                                 MarkerHandler.getInstance().getRandomHiddenMarker(yourPosition ,
-                                        getResources())));
+                                        getResources(), getContext())));
             } catch (IllegalStateException ex) {
                 Log.w(TAG, "UnstableTimerMethod replaced with new one");
             }

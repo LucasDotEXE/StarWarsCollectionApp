@@ -5,16 +5,15 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
-import com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
 import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -22,10 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 public class MarkerHandler {
 
@@ -119,7 +115,7 @@ public class MarkerHandler {
         return markerOptions;
     }
 
-    public MarkerOptions getRandomHiddenMarker(LatLng yourPosition, Resources resources) {
+    public MarkerOptions getRandomHiddenMarker(LatLng yourPosition, Resources resources, Context context) {
         double standardDif = 0.001;
 
         double latDif = (Math.random() * standardDif * 2) - standardDif;
@@ -129,16 +125,25 @@ public class MarkerHandler {
                 yourPosition.latitude + latDif,
                 yourPosition.longitude + longDif);
 
-        Bitmap b = BitmapFactory.decodeResource(resources, R.drawable.ic_question);
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_id), Context.MODE_PRIVATE);
+        boolean useSith = sharedPref.getBoolean(context.getString(R.string.preferences_theme_use_sith), false);
+
+        Bitmap b;
+        if (useSith) {
+            b = BitmapFactory.decodeResource(resources, R.drawable.ic_question_red);
+        } else  {
+            b = BitmapFactory.decodeResource(resources, R.drawable.ic_question_blue);
+        }
+
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
         BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
-        MarkerOptions markerOptions = new MarkerOptions()
+                MarkerOptions markerOptions = new MarkerOptions()
                 .position(diviatedPosition)
                 .snippet("Tap to Reveal\n What you got")
                 .icon(smallMarkerIcon)
                 .anchor(0.5f, .05f);
 
-        double random = Math.random() * 1;
+        double random = Math.random() * 6;
         if (random < 1) {
             markerOptions.title("Hidden Film");
         } else if (random < 2 && random > 1) {

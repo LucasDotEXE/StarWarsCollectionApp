@@ -1,7 +1,7 @@
 package com.example.starwarscollectablegame.Util;
 
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.StarWarsDataType;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.StarWarsDataType;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
 import com.example.starwarscollectablegame.Util.StarwarsFactory.FilmJsonFactory;
 import com.example.starwarscollectablegame.Util.StarwarsFactory.PeopleJsonFactory;
 import com.example.starwarscollectablegame.Util.StarwarsFactory.PlanetJsonFactory;
