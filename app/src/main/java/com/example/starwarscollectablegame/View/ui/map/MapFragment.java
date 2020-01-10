@@ -1,6 +1,7 @@
 package com.example.starwarscollectablegame.View.ui.map;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
@@ -165,12 +166,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
-            boolean success = this.mMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            getContext(),
-//                            R.raw.jedi_style_json));
-                            R.raw.sith_style_json));
-//                            this, R.raw.test));
+
+            SharedPreferences sharedPref = Objects.requireNonNull(getContext()).getSharedPreferences(getString(R.string.preference_id), Context.MODE_PRIVATE);
+
+            boolean useSith = sharedPref.getBoolean(getString(R.string.preferences_theme_use_sith), false);
+            boolean success;
+            if (useSith) {
+                success = this.mMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(
+                                getContext(),
+                                R.raw.sith_style_json));
+            } else  {
+                success = this.mMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(
+                                getContext(),
+                                R.raw.jedi_style_json));
+            }
 
             if (!success) {
                 Log.e("MAPACtivity", "Style parsing failed.");
