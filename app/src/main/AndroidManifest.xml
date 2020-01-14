@@ -28,7 +28,8 @@
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".View.MainActivity"
-            android:label="@string/title_activity_main"
+            android:configChanges="orientation|screenSize"
+        android:label="@string/title_activity_main"
             tools:ignore="InnerclassSeparator" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
