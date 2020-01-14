@@ -243,7 +243,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 int avatar_id;
                 if (!playerData.isEmpty()) {
                     avatar_id = playerData.get(0).getAvatar_id();
-                    MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, getResources(), avatar_id);
+                    MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, getActivity(), avatar_id);
 
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
 

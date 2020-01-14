@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">StarwarsCollectableGame</string>
+    <string name="addedit_player_name_hint">Naam</string>
+    <string name="splashscreen_footer">Lucas Prins en Sebastiaan Colijn</string>
+    <string name="nav_header_subtitle">Star Wars Verzamel Spel</string>
+    <string name="marker_yourlocation">Uw Locatie</string>
+    <string name="menu_Collection">Verzameling</string>
+    <string name="menu_Film">Films</string>
+    <string name="menu_Map">Kaart</string>
+    <string name="menu_People">Personen</string>
+    <string name="menu_Planet">Planeten</string>
+    <string name="menu_Profile">Profielen</string>
+    <string name="menu_Settings">Instellingen</string>
+    <string name="menu_Species">Soorten</string>
+    <string name="menu_Starships">Ruimteschepen</string>
+    <string name="menu_Vehicles">Voertuigen</string>
+    <string name="nav_header_title">" "</string>
+    <string name="settings_switch_off">Keer je tot de duistere kant</string>
+    <string name="settings_switch_on">Keer je tot het licht</string>
+    <string name="collection_film_filmid">Episode</string>
+    <string name="settings_button_refilldatabase">Hervul Database</string>
+    <string name="settings_popup_title">Weet je het zeker?</string>
+    <string name="settings_popup_message">Als u de database opnieuw vult, gaan ook alle spelersgegevens verloren. Het is ook niet gegarandeerd dat de juiste gegevens worden geladen. Dus wees er zeker van voordat je begint.</string>
+    <string name="settings_popup_cancel">Annuleren</string>
+    <string name="settings_popup_confirm">Bevestig</string>
+    <string name="action_settings">" "</string>
+    <string name="markerhandler_maxed_film">U heeft elke film op het maximale niveau</string>
+    <string name="markerhanlder_levelup">" Ging op naar niveau "</string>
+    <string name="markerhandler_clicktoreveal">Tik om te onthullen wat je hebt</string>
+    <string name="markerhandler_hidden_film">Verborgen Film</string>
+    <string name="markerhandler_hidden_people">Verborgen Persoon</string>
+    <string name="markerhandler_hidden_planet">Verborgen Planeet</string>
+    <string name="markerhandler_hidden_species">Verborgen Soort</string>
+    <string name="markerhandler_hidden_starship">Verborgen Ruimteschip</string>
+    <string name="markerhandler_hidden_vehicle">Verborgen Voertuig</string>
 </resources>
