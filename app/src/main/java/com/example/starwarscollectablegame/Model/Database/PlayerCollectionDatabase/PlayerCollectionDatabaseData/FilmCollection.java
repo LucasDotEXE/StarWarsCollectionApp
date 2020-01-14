@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
 @Entity(tableName = "film_collection", primaryKeys = {"player_name", "film_id"})
-public class FilmCollection extends ewa{
+public class FilmCollection extends collectionBase {
 
     @NonNull
     private String player_name;

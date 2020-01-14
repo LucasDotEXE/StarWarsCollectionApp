@@ -3,9 +3,9 @@ package com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatab
 import android.os.AsyncTask;
 
 import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DaoInterfaces.BaseCollectionDao;
-import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.ewa;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.collectionBase;
 
-public class DatabaseEditHelper<T extends ewa> {
+public class DatabaseEditHelper<T extends collectionBase> {
     private BaseCollectionDao<T> dao;
 
     public DatabaseEditHelper(BaseCollectionDao<T> dao) {
@@ -29,7 +29,7 @@ public class DatabaseEditHelper<T extends ewa> {
     }
 
 
-    private static class InsertAsyncTask<T extends ewa> extends AsyncTask<T, Void, Void> {
+    private static class InsertAsyncTask<T extends collectionBase> extends AsyncTask<T, Void, Void> {
 
         private BaseCollectionDao<T> dao;
 
@@ -44,7 +44,7 @@ public class DatabaseEditHelper<T extends ewa> {
         }
     }
 
-    private static class UpdateAsyncTask<T extends ewa> extends AsyncTask<T, Void, Void> {
+    private static class UpdateAsyncTask<T extends collectionBase> extends AsyncTask<T, Void, Void> {
 
         private BaseCollectionDao<T> dao;
 
@@ -59,7 +59,7 @@ public class DatabaseEditHelper<T extends ewa> {
         }
     }
 
-    private static class DeleteAsyncTask<T extends ewa> extends AsyncTask<T, Void, Void> {
+    private static class DeleteAsyncTask<T extends collectionBase> extends AsyncTask<T, Void, Void> {
 
         private BaseCollectionDao<T> dao;
 
@@ -74,7 +74,7 @@ public class DatabaseEditHelper<T extends ewa> {
         }
     }
 
-    private static class DeleteAllAsyncTask<T extends ewa> extends AsyncTask<Void, Void, Void> {
+    private static class DeleteAllAsyncTask<T extends collectionBase> extends AsyncTask<Void, Void, Void> {
 
         private BaseCollectionDao<T> dao;
 

@@ -54,4 +54,5 @@
     <string name="height">Height</string>
     <string name="mass">Mass</string>
     <string name="unknown">Unknown</string>
+    <string name="wip_fragment">This section is still a Work In Progress. It might be implemented in a later version.</string>
 </resources>

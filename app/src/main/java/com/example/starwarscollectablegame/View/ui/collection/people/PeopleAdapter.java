@@ -64,16 +64,12 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
             this.id = itemView.findViewById(R.id.film_item_id);
             this.lvlBarr = itemView.findViewById(R.id.film_item_lvl);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), PersonFragment.class);
-                    People person = people.get(PeopleViewHolder.super.getAdapterPosition());
-                    intent.putExtra("object", person);
-                    intent.putExtra("level", 2);
-                    view.getContext().startActivity(intent);
-
-                }
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(view.getContext(), PersonFragment.class);
+                People person = people.get(PeopleViewHolder.super.getAdapterPosition());
+                intent.putExtra("object", person);
+                intent.putExtra("level", 2);
+                view.getContext().startActivity(intent);
             });
         }
     }

@@ -34,4 +34,5 @@
     <string name="markerhandler_hidden_species">Verborgen Soort</string>
     <string name="markerhandler_hidden_starship">Verborgen Ruimteschip</string>
     <string name="markerhandler_hidden_vehicle">Verborgen Voertuig</string>
+    <string name="wip_fragment">Dit gedeelte is nog steeds een Werk In Uitvoering. Het kan zijn dat dit nog in een latere versie geïmplementeerd word.</string>
 </resources>

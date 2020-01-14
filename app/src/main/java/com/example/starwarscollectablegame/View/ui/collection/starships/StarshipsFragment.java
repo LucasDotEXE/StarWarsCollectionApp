@@ -24,12 +24,7 @@ public class StarshipsFragment extends Fragment {
                 ViewModelProviders.of(this).get(StarshipsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_collection, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
-        StarshipsViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        textView.setText(R.string.wip_fragment);
         return root;
     }
 }

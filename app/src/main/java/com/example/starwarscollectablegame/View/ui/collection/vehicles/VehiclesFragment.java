@@ -24,12 +24,7 @@ public class VehiclesFragment extends Fragment {
                 ViewModelProviders.of(this).get(VehiclesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_collection, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
-        vehiclesViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        textView.setText(R.string.wip_fragment);
         return root;
     }
 }

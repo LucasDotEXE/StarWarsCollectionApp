@@ -24,12 +24,7 @@ public class PlanetsFragment extends Fragment {
                 ViewModelProviders.of(this).get(PlanetsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_collection, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
-        planetsViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        textView.setText(R.string.wip_fragment);
         return root;
     }
 }
