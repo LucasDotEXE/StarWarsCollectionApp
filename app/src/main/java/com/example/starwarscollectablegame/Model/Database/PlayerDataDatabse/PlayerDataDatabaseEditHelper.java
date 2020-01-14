@@ -4,9 +4,6 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DaoInterfaces.BaseCollectionDao;
-import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.ewa;
-
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -34,9 +31,9 @@ public class PlayerDataDatabaseEditHelper {
         new DeleteAllAsyncTask(playerDataDao).execute();
     }
 
-    public LiveData<List<PlayerData>> getPlayerById(int id) {
+    public LiveData<List<PlayerData>> getPlayerByName(String name) {
         try {
-            return new getPlayerByIdTask(playerDataDao).execute(id).get();
+            return new getPlayerByNameTask(playerDataDao).execute(name).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -46,17 +43,17 @@ public class PlayerDataDatabaseEditHelper {
     }
 
 
-    private static class getPlayerByIdTask extends AsyncTask<Integer, Void, LiveData<List<PlayerData>>> {
+    private static class getPlayerByNameTask extends AsyncTask<String, Void, LiveData<List<PlayerData>>> {
 
         private PlayerDataDao dao;
 
-        public getPlayerByIdTask(PlayerDataDao dao) {
+        public getPlayerByNameTask(PlayerDataDao dao) {
             this.dao = dao;
         }
 
         @Override
-        protected LiveData<List<PlayerData>> doInBackground(Integer... integers) {
-            return dao.getPlayerById(integers[0]);
+        protected LiveData<List<PlayerData>> doInBackground(String... strings) {
+            return dao.getPlayerByName(strings[0]);
         }
     }
 

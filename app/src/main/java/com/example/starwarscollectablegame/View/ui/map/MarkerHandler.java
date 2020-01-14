@@ -21,7 +21,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.InputStream;
 import java.util.List;
+
+import static com.example.starwarscollectablegame.View.ui.profile.AvatarViewAdapter.avatarStrings;
 
 public class MarkerHandler {
 
@@ -45,7 +48,7 @@ public class MarkerHandler {
 //        Log.e("asdasdasdasdasd", title);
         final SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_id), Context.MODE_PRIVATE);
         if (titleType.equals("film")) {
-            final LiveData<List<FilmCollection>> playerFilmCollecion = repository.getFilmCollectionById(sharedPref.getInt(context.getString(R.string.preferences_player_id), 0));
+            final LiveData<List<FilmCollection>> playerFilmCollecion = repository.getFilmCollectionByName(sharedPref.getString(context.getString(R.string.preferences_player_id), ""));
             playerFilmCollecion.observe(lifecycleOwner, new Observer<List<FilmCollection>>() {
                 @Override
                 public void onChanged(List<FilmCollection> filmCollections) {
@@ -102,12 +105,18 @@ public class MarkerHandler {
         }
     }
 
-    public MarkerOptions getLocationMarker(LatLng yourPosition, Resources resources) {
+    public MarkerOptions getLocationMarker(LatLng yourPosition, Resources resources, int avatarId) {
         int height = 100;
         int width = 100;
-        Bitmap b = BitmapFactory.decodeResource(resources, R.drawable.ic_hooded);
+
+
+        InputStream imageStream = resources.openRawResource(avatarId);
+        Bitmap b = BitmapFactory.decodeStream(imageStream);
+//        Bitmap b = BitmapFactory.decodeResource(resources, R.drawable.ic_hooded);
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
         BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+
+
         MarkerOptions markerOptions = new MarkerOptions().position(yourPosition)
                 .title("Your Location")
                 .icon(smallMarkerIcon)
@@ -143,7 +152,7 @@ public class MarkerHandler {
                 .icon(smallMarkerIcon)
                 .anchor(0.5f, .05f);
 
-        double random = Math.random() * 6;
+        double random = Math.random() * 1;
         if (random < 1) {
             markerOptions.title("Hidden Film");
         } else if (random < 2 && random > 1) {

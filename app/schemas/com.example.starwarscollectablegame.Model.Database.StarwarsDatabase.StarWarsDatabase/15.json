@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 13,
-    "identityHash": "73f5a66d5b6dbc66d3531509ce17752c",
+    "version": 15,
+    "identityHash": "7dafc654304a1c260a33ae228cced5f2",
     "entities": [
       {
         "tableName": "film_table",
@@ -650,19 +650,13 @@
       },
       {
         "tableName": "film_collection",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`player_id` INTEGER NOT NULL, `player_name` TEXT, `film_id` INTEGER NOT NULL, `level` INTEGER NOT NULL, `exp` INTEGER NOT NULL, PRIMARY KEY(`player_id`, `film_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`player_name` TEXT NOT NULL, `film_id` INTEGER NOT NULL, `level` INTEGER NOT NULL, `exp` INTEGER NOT NULL, PRIMARY KEY(`player_name`, `film_id`))",
         "fields": [
-          {
-            "fieldPath": "player_id",
-            "columnName": "player_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "player_name",
             "columnName": "player_name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "film_id",
@@ -685,7 +679,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "player_id",
+            "player_name",
             "film_id"
           ],
           "autoGenerate": false
@@ -695,19 +689,13 @@
       },
       {
         "tableName": "player_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`player_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `player_name` TEXT, `avatar_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`player_name` TEXT NOT NULL, `avatar_id` INTEGER NOT NULL, PRIMARY KEY(`player_name`))",
         "fields": [
-          {
-            "fieldPath": "player_id",
-            "columnName": "player_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "player_name",
             "columnName": "player_name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "avatar_id",
@@ -718,9 +706,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "player_id"
+            "player_name"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -729,7 +717,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '73f5a66d5b6dbc66d3531509ce17752c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7dafc654304a1c260a33ae228cced5f2')"
     ]
   }
 }

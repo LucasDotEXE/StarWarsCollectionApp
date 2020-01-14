@@ -57,10 +57,10 @@ public class FilmFragment extends Fragment {
 
         final SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_id), Context.MODE_PRIVATE);
 //        final SharedPreferences.Editor editor = sharedPref.edit();
-        int playerId = sharedPref.getInt(getString(R.string.preferences_player_id), 0);
+        String playerName = sharedPref.getString(getString(R.string.preferences_player_id), "");
 
-        Log.wtf(TAG, "Ik heb het id: " + playerId);
-        this.filmViewModel.getStarWarsDataRepository().getFilmCollectionById(playerId).observe(this, new Observer<List<FilmCollection>>() {
+        Log.wtf(TAG, "Ik heb het id: " + playerName);
+        this.filmViewModel.getStarWarsDataRepository().getFilmCollectionByName(playerName).observe(this, new Observer<List<FilmCollection>>() {
             @Override
             public void onChanged(List<FilmCollection> filmCollections) {
                 Log.wtf("Help", filmCollections.toString());

@@ -67,7 +67,7 @@ public class SettingsFragment extends Fragment implements SwapiEntryPageListener
         refreshDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                settingsViewModel.getRepository().clearDatabase();
+                settingsViewModel.getRepository().clearDatabase();
                 StarWarsDataRepository.fillDatabase(listener, context);
             }
         });

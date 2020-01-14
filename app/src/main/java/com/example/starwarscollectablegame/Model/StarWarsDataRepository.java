@@ -157,9 +157,9 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         return null;
     }
 
-    public LiveData<List<FilmCollection>> getFilmCollectionById(int id) {
+    public LiveData<List<FilmCollection>> getFilmCollectionByName(String name) {
         try {
-            return new GetFilmCollectionByIdAsyncTask(filmCollectionDao).execute(id).get();
+            return new GetFilmCollectionByIdAsyncTask(filmCollectionDao).execute(name).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -215,7 +215,7 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         }
     }
 
-    private static class GetFilmCollectionByIdAsyncTask extends AsyncTask<Integer, Void, LiveData<List<FilmCollection>>> {
+    private static class GetFilmCollectionByIdAsyncTask extends AsyncTask<String, Void, LiveData<List<FilmCollection>>> {
 
         private FilmCollectionDao filmDao;
 
@@ -224,8 +224,8 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         }
 
         @Override
-        protected LiveData<List<FilmCollection>> doInBackground(Integer... integers) {
-            LiveData<List<FilmCollection>> film = filmDao.getFilmCollectionByPlayerID(integers[0]);
+        protected LiveData<List<FilmCollection>> doInBackground(String... strings) {
+            LiveData<List<FilmCollection>> film = filmDao.getFilmCollectionByPlayerID(strings[0]);
             return film;
         }
     }

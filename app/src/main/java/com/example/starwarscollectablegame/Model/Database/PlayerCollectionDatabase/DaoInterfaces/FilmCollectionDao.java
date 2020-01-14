@@ -11,16 +11,16 @@ import java.util.List;
 @Dao
 public interface FilmCollectionDao extends BaseCollectionDao<FilmCollection> {
 
-    @Query("SELECT * FROM film_collection ORDER BY player_id ASC")
+    @Query("SELECT * FROM film_collection ORDER BY player_name")
     LiveData<List<FilmCollection>> getFilmCollection();
 
 
-    @Query("SELECT * FROM film_collection WHERE player_id LIKE :playerid ORDER BY film_id ASC")
-    LiveData<List<FilmCollection>> getFilmCollectionByPlayerID(int playerid);
+    @Query("SELECT * FROM film_collection WHERE player_name LIKE :player_name ORDER BY film_id ASC")
+    LiveData<List<FilmCollection>> getFilmCollectionByPlayerID(String player_name);
 
     @Query("DELETE FROM film_collection")
     void deleteAll();
 
-    @Query("DELETE FROM film_collection WHERE player_id LIKE :player_id")
-    void deleteFilmPlayerCollection(int player_id);
+    @Query("DELETE FROM film_collection WHERE player_name LIKE :player_name")
+    void deleteFilmPlayerCollection(String player_name);
 }

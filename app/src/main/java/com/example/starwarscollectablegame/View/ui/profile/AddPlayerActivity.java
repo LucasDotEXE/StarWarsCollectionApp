@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,7 +24,10 @@ import java.util.Objects;
 
 public class AddPlayerActivity extends AppCompatActivity {
 
-
+    public static final String EXTRA_NAME =
+               "om.example.starwarscollectablegame.View.ui.profile.EXTRA_NAME";
+    public static final String EXTRA_AVATARID =
+               "om.example.starwarscollectablegame.View.ui.profile.EXTRA_AVATARID";
 
     private TextView name;
     private ImageView selectedAvatar;
@@ -52,10 +56,19 @@ public class AddPlayerActivity extends AppCompatActivity {
     }
 
     private void savePlayer() {
-        if (name.getText().toString().trim().isEmpty()) {
+        String name = this.name.getText().toString();
+        int avatarId = ((AvatarViewAdapter) this.recyclerView.getAdapter()).getSelected();
+
+
+        if (name.trim().isEmpty()) {
             Toast.makeText(this, "You need to add a Name", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, this.name.getText().toString(), Toast.LENGTH_SHORT).show();
+            Intent data = new Intent();
+            data.putExtra(EXTRA_NAME, name);
+            data.putExtra(EXTRA_AVATARID, avatarId);
+
+            setResult(RESULT_OK, data);
+            finish();
         }
     }
 

@@ -1,18 +1,21 @@
 package com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
-@Entity(tableName = "film_collection", primaryKeys = {"player_id", "film_id"})
+@Entity(tableName = "film_collection", primaryKeys = {"player_name", "film_id"})
 public class FilmCollection extends ewa{
 
-    private int player_id;
+    @NonNull
     private String player_name;
+    @NonNull
     private int film_id;
+
     private int level;
+
     private int exp;
 
-    public FilmCollection(int player_id, String player_name, int film_id, int level, int exp) {
-        this.player_id = player_id;
+    public FilmCollection(String player_name, int film_id, int level, int exp) {
         this.player_name = player_name;
         this.film_id = film_id;
         this.level = level;
@@ -21,14 +24,6 @@ public class FilmCollection extends ewa{
 
     public int getLevel() {
         return level;
-    }
-
-    public int getPlayer_id() {
-        return player_id;
-    }
-
-    public void setPlayer_id(int player_id) {
-        this.player_id = player_id;
     }
 
     public int getFilm_id() {
@@ -62,7 +57,6 @@ public class FilmCollection extends ewa{
     @Override
     public String toString() {
         return "FilmCollection{" +
-                "player_id=" + player_id +
                 ", player_name='" + player_name + '\'' +
                 ", film_id=" + film_id +
                 ", level=" + level +

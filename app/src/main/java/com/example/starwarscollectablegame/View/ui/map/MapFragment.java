@@ -23,6 +23,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerData;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -233,12 +234,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         final LatLng yourPosition = new LatLng(location.getLatitude(), location.getLongitude());
         this.yourPosition = yourPosition;
-        MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, getResources());
 
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        final SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_id), Context.MODE_PRIVATE);
+        final String name = sharedPref.getString(getString(R.string.preferences_player_id), "Not Found");
+        viewModel.getHelperRepo().playerDataDatabaseEditHelper.getPlayerByName(name).observe(getViewLifecycleOwner(), new Observer<List<PlayerData>>() {
+            @Override
+            public void onChanged(List<PlayerData> playerData) {
 
-        updateCameraAndBounds(builder, yourPosition, markerOptions);
 
+                MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, getResources(), playerData.get(0).getAvatar_id());
+
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+                updateCameraAndBounds(builder, yourPosition, markerOptions);
+
+                viewModel.getHelperRepo().playerDataDatabaseEditHelper.getPlayerByName(name).removeObserver(this);
+            }
+        });
     }
 
     private void updateCameraAndBounds(LatLngBounds.Builder builder, final LatLng yourPosition, MarkerOptions markerOptions) {

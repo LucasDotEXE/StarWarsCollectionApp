@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
@@ -27,8 +28,13 @@ import com.example.starwarscollectablegame.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.Objects;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
+
+    public static final int ADD_NOTE_REQUEST = 1;
 
     private ProfileViewModel profileViewModel;
 
@@ -37,64 +43,32 @@ public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
+        this.profileViewModel =
                 ViewModelProviders.of(this).get(ProfileViewModel.class);
 
         final View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final Button playerButton = root.findViewById(R.id.add_player);
-        final TextView playerName = root.findViewById(R.id.player_name);
+
         final FloatingActionButton addPlayerButton = root.findViewById(R.id.add_player_button);
         final RecyclerView recyclerView = root.findViewById(R.id.player_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        final LifecycleOwner owner = this;
-        final Context context = this.getContext();
-
         final SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_id), Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
 
+        this.adapter = new ProfileViewAdapter(getContext());
+        recyclerView.setAdapter(adapter);
 
-        Log.wtf(TAG, "Is het de defoult val?  :   " + sharedPref.getInt(getString(R.string.preferences_player_id), 437854378));
-
-        playerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                profileViewModel.getAllPlayerData().observe(owner, new Observer<List<PlayerData>>() {
-                    @Override
-                    public void onChanged(final List<PlayerData> playerData) {
-                        profileViewModel.getRepository().getAllFilms().observe(owner, new Observer<List<Film>>() {
-                            @Override
-                            public void onChanged(List<Film> films) {
-                                for (Film film : films) {
-                                    profileViewModel.getRepository().filmCollectionDatabaseEditHelper.insert(
-                                            new FilmCollection(playerData.size(), playerName.getText().toString(),
-                                                    film.getEpisodeId(), 0, 0));
-                                }
-                                profileViewModel.getRepository().getAllFilms().removeObserver(this);
-                                playerName.setText("");
-                            }
-                        });
-                        profileViewModel.insert(new PlayerData(playerData.size(), playerName.getText().toString(), 2));
-
-                        Toast.makeText(context, "Inserted PlayerData: " + playerData.size() + "  " + playerName.getText().toString(), Toast.LENGTH_SHORT).show();
-                        playerName.setText("");
-                        profileViewModel.getAllPlayerData().removeObserver(this);
-                    }
-                });
-            }
-        });
+        Log.wtf(TAG, "Is het de defoult val?  :   " + sharedPref.getString(getString(R.string.preferences_player_id), "Not Found"));
 
         addPlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddPlayerActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, ADD_NOTE_REQUEST);
             }
         });
 
 
-        final ProfileViewAdapter adapter = new ProfileViewAdapter(getContext());
-        recyclerView.setAdapter(adapter);
 
         profileViewModel.getAllPlayerData().observe(getViewLifecycleOwner(), new Observer<List<PlayerData>>() {
             @Override
@@ -102,8 +76,39 @@ public class ProfileFragment extends Fragment {
                 adapter.setPlayerData(playerData);
             }
         });
-
-
         return root;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
+            final String name = Objects.requireNonNull(data).getStringExtra(AddPlayerActivity.EXTRA_NAME);
+            int avatarId = data.getIntExtra(AddPlayerActivity.EXTRA_AVATARID, -1);
+
+            PlayerData player = new PlayerData(name, avatarId);
+            if (!this.adapter.getPlayerNames().contains(name)) {
+                profileViewModel.insert(player, getViewLifecycleOwner());
+                profileViewModel.getRepository().getAllFilms().observe(getViewLifecycleOwner(), new Observer<List<Film>>() {
+                    @Override
+                    public void onChanged(List<Film> films) {
+                        for (Film film : films) {
+                            Log.wtf("TEST at ProfileViewModel", name + " added " + film.getEpisodeId());
+                            profileViewModel.getRepository().filmCollectionDatabaseEditHelper.insert(new FilmCollection(
+                                    name, film.getEpisodeId(), 0, 0));
+                        }
+                        profileViewModel.getRepository().getAllFilms().removeObserver(this);
+                    }
+                });
+
+                Toast.makeText(getContext(), "Added " + name, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Name Already existed", Toast.LENGTH_SHORT).show();
+            }
+        } else if (false){
+
+        }
+
     }
 }

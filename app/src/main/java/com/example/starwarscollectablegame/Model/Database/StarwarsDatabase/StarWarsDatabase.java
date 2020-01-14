@@ -31,7 +31,7 @@ import com.example.starwarscollectablegame.Util.Converters;
 @Database(entities ={Film.class, People.class, Planet.class, Species.class, Starship.class, Vehicle.class,
                      FilmCollection.class,
                      PlayerData.class}
-                     , version = 13)
+                     , version = 15)
 @TypeConverters({Converters.class})
 public abstract class StarWarsDatabase extends RoomDatabase{
 

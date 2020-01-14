@@ -26,9 +26,9 @@ public interface PlayerDataDao {
     @Query("DELETE FROM PLAYER_TABLE")
     void deleteAll();
 
-    @Query("SELECT * FROM player_table ORDER BY player_id ASC")
+    @Query("SELECT * FROM player_table ORDER BY player_name ASC")
     LiveData<List<PlayerData>> getAllPlayers();
 
-    @Query("SELECT * FROM player_table WHERE player_id=:player_id")
-    LiveData<List<PlayerData>> getPlayerById(int player_id);
+    @Query("SELECT * FROM player_table WHERE player_name=:player_name")
+    LiveData<List<PlayerData>> getPlayerByName(String player_name);
 }
