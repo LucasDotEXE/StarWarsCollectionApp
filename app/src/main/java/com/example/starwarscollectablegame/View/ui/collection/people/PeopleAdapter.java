@@ -1,5 +1,6 @@
 package com.example.starwarscollectablegame.View.ui.collection.people;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 import com.example.starwarscollectablegame.R;
+import com.example.starwarscollectablegame.View.DetailFragments.PersonFragment;
+import com.example.starwarscollectablegame.View.ui.collection.films.FilmAdapter;
 
 import java.util.List;
 
 public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleViewHolder> {
 
-    private static final String TAG = "FilmAdapter";
+    private static final String TAG = "PeopleAdapter";
 
     private List<People> people;
 
-    public PeopleAdapter(List<People> films) {
-        this.people = films;
+    public PeopleAdapter(List<People> people) {
+        this.people = people;
     }
 
-    public void setFilms(List<People> films) {
-        this.people = films;
+    public void SetPeople(List<People> people) {
+        this.people = people;
     }
 
     @NonNull
@@ -38,10 +41,8 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
 
     @Override
     public void onBindViewHolder(@NonNull PeopleViewHolder holder, int position) {
-        People film = people.get(position);
-
-
-        holder.name.setText(film.getName());
+        People people = this.people.get(position);
+        holder.name.setText(people.getName());
         holder.lvlBarr.setRating(2);
     }
 
@@ -61,6 +62,15 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
             this.name = itemView.findViewById(R.id.film_item_name);
             this.id = itemView.findViewById(R.id.film_item_id);
             this.lvlBarr = itemView.findViewById(R.id.film_item_lvl);
+
+            itemView.setOnClickListener((view) -> {
+                Intent intent = new Intent(view.getContext(), PersonFragment.class);
+                People person = people.get(PeopleViewHolder.super.getAdapterPosition());
+                intent.putExtra("object", person);
+                intent.putExtra("level", 2);
+                view.getContext().startActivity(intent);
+
+            });
         }
     }
 }

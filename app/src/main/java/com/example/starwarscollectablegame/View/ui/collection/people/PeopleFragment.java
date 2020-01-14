@@ -35,7 +35,7 @@ public class PeopleFragment extends Fragment {
         peopleViewModel.getAllPeople().observe(this, new Observer<List<People>>() {
             @Override
             public void onChanged(List<People> people) {
-                adapter.setFilms(people);
+                adapter.SetPeople(people);
                 adapter.notifyDataSetChanged();
             }
         });
