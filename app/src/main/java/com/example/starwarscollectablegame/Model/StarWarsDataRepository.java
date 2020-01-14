@@ -6,28 +6,30 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.StarwarsApiManager;
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryPageListener;
-import com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.DaoInterfaces.FilmCollectionDao;
-import com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.FilmDao;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.PeopleDao;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.PlanetDao;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.SpeciesDao;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.StarshipDao;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.DaoInterfaces.VehicleDao;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.DatabaseEditHelper;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarWarsDatabase;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.People;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Planet;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Species;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.StarWarsDataType;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Starship;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Vehicle;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DaoInterfaces.FilmCollectionDao;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerData;
+import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerDataDao;
+import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerDataDatabaseEditHelper;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.FilmDao;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.PeopleDao;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.PlanetDao;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.SpeciesDao;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.StarshipDao;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.VehicleDao;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DatabaseEditHelper;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarWarsDatabase;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Planet;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Species;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.StarWarsDataType;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Starship;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.SwapiEntry;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,14 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
 
     private LiveData<List<FilmCollection>> filmCollection;
 
-    public com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.DatabaseEditHelper<FilmCollection> filmCollectionDatabaseEditHelper;
+    public com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DatabaseEditHelper<FilmCollection> filmCollectionDatabaseEditHelper;
+
+    public PlayerDataDatabaseEditHelper playerDataDatabaseEditHelper;
+
+    private PlayerDataDao playerDataDao;
+
+    private LiveData<List<PlayerData>> allPlayerData;
+
 
     private static StarwarsApiManager apiManager;
 
@@ -100,7 +109,14 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
 
         this.filmCollection = this.filmCollectionDao.getFilmCollection();
 
-        this.filmCollectionDatabaseEditHelper = new com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.DatabaseEditHelper<>(this.filmCollectionDao);
+
+        this.playerDataDao = database.playerDataDao();
+        this.playerDataDatabaseEditHelper = new PlayerDataDatabaseEditHelper(this.playerDataDao);
+
+        this.allPlayerData = this.playerDataDao.getAllPlayers() ;
+
+
+        this.filmCollectionDatabaseEditHelper = new com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DatabaseEditHelper<>(this.filmCollectionDao);
 
 
     }
@@ -126,6 +142,8 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         this.speciesDatabaseEditor.deleteAll();
         this.starshipDatabaseEditor.deleteAll();
         this.vehicleDatabaseEditor.deleteAll();
+        this.playerDataDatabaseEditHelper.deleteAll();
+        this.filmCollectionDatabaseEditHelper.delleteAll();
     }
 
     public LiveData<List<Film>> getFilmById(int id) {
@@ -139,9 +157,9 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         return null;
     }
 
-    public LiveData<List<FilmCollection>> getFilmCollectionById(int id) {
+    public LiveData<List<FilmCollection>> getFilmCollectionByName(String name) {
         try {
-            return new GetFilmCollectionByIdAsyncTask(filmCollectionDao).execute(id).get();
+            return new GetFilmCollectionByIdAsyncTask(filmCollectionDao).execute(name).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -178,6 +196,10 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         return filmCollection;
     }
 
+    public LiveData<List<PlayerData>> getAllPlayerData() {
+        return this.allPlayerData;
+    }
+
     private static class GetFilmByIdAsyncTask extends AsyncTask<Integer, Void, LiveData<List<Film>>> {
 
         private FilmDao filmDao;
@@ -193,7 +215,7 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         }
     }
 
-    private static class GetFilmCollectionByIdAsyncTask extends AsyncTask<Integer, Void, LiveData<List<FilmCollection>>> {
+    private static class GetFilmCollectionByIdAsyncTask extends AsyncTask<String, Void, LiveData<List<FilmCollection>>> {
 
         private FilmCollectionDao filmDao;
 
@@ -202,8 +224,8 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         }
 
         @Override
-        protected LiveData<List<FilmCollection>> doInBackground(Integer... integers) {
-            LiveData<List<FilmCollection>> film = filmDao.getFilmCollectionByPlayerID(integers[0]);
+        protected LiveData<List<FilmCollection>> doInBackground(String... strings) {
+            LiveData<List<FilmCollection>> film = filmDao.getFilmCollectionByPlayerID(strings[0]);
             return film;
         }
     }

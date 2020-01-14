@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,11 +15,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
-import com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FilmFragment extends Fragment {
@@ -59,10 +57,10 @@ public class FilmFragment extends Fragment {
 
         final SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_id), Context.MODE_PRIVATE);
 //        final SharedPreferences.Editor editor = sharedPref.edit();
-        int playerId = sharedPref.getInt(getString(R.string.preferences_player_id), 0);
+        String playerName = sharedPref.getString(getString(R.string.preferences_player_id), "");
 
-        Log.wtf(TAG, "Ik heb het id: " + playerId);
-        this.filmViewModel.getStarWarsDataRepository().getFilmCollectionById(playerId).observe(this, new Observer<List<FilmCollection>>() {
+        Log.wtf(TAG, "Ik heb het id: " + playerName);
+        this.filmViewModel.getStarWarsDataRepository().getFilmCollectionByName(playerName).observe(this, new Observer<List<FilmCollection>>() {
             @Override
             public void onChanged(List<FilmCollection> filmCollections) {
                 Log.wtf("Help", filmCollections.toString());
