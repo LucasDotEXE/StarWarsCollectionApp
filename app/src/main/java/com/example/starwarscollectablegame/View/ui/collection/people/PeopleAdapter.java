@@ -67,7 +67,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), PersonFragment.class);
+                    Intent intent = new Intent(view.getContext(), PersonActivity.class);
                     People person = people.get(PeopleViewHolder.super.getAdapterPosition());
                     intent.putExtra("object", person);
                     intent.putExtra("level", 2);

@@ -21,13 +21,14 @@
         android:theme="@style/AppThemeSith"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <receiver android:name=".Model.GeoFencing.GeoFenceHandler"/>
-        <activity android:name=".View.ui.profile.AddPlayerActivity"
+
+        <activity android:name=".View.ui.profile.AddEditPlayerActivity"
             tools:ignore="InnerclassSeparator" />
         <activity android:name=".View.DetailFragments.PersonActivity"></activity>
         <activity
             android:name=".View.MainActivity"
-            android:label="@string/title_activity_main"
+            android:configChanges="orientation|screenSize"
+        android:label="@string/title_activity_main"
             tools:ignore="InnerclassSeparator" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
