@@ -109,13 +109,6 @@ public class MarkerHandler {
     public MarkerOptions getLocationMarker(LatLng yourPosition, FragmentActivity activity, int avatarId) {
         int height = 100;
         int width = 100;
-        InputStream imageStream;
-        if (avatarId != 0)
-            imageStream = resources.openRawResource(avatarId);
-        else
-            imageStream = resources.openRawResource(avatarId); //TODO lucas: andere avatar als avatarID 0 is?
-
-
         InputStream imageStream = activity.getResources().openRawResource(avatarId);
         Bitmap b = BitmapFactory.decodeStream(imageStream);
 //        Bitmap b = BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_hooded);

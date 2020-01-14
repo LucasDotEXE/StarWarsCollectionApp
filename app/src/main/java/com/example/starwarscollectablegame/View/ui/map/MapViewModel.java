@@ -17,7 +17,6 @@ import com.example.starwarscollectablegame.Model.GeoFencing.GeoFenceHandler;
 import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
-import com.example.starwarscollectablegame.View.ui.profile.AddPlayerActivity;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.HashMap;
