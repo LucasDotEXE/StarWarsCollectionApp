@@ -38,7 +38,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
@@ -47,7 +49,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private final int PERMISSION_REQUEST_CODE = 698;
     final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
 
-    private ArrayList<Marker> markers = new ArrayList<>();
     private LatLng yourPosition = new LatLng(0,0);
 
     private LocationListener listener;
@@ -139,17 +140,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             int timeInMs = sec * 1000 + min * 60000;
             spawnHandler.postDelayed(spawnNewCollectionMarker, timeInMs);
 
-            if (markers.size() >= 5) {
+            /*if (markers.size() >= 5) {
                 Marker marker = markers.get(0);
                 marker.remove();
                 markers.remove(marker);
 
-            }
+            }*/
             try {
-                markers.add(
+                        Marker m =
                         mMap.addMarker(
                                 MarkerHandler.getInstance().getRandomHiddenMarker(yourPosition ,
-                                        getResources(), getContext())));
+                                        getResources(), getContext()));
+                        viewModel.getGeoFenceHandler().addGeoFence(
+                                m.getPosition().latitude,
+                                m.getPosition().longitude,
+                                Integer.toString(viewModel.getMarkerCounter()));
+                        viewModel.markers.put(Integer.toString(viewModel.getMarkerCounter()),m);
             } catch (IllegalStateException ex) {
                 Log.w(TAG, "UnstableTimerMethod replaced with new one");
             }
@@ -240,7 +246,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         viewModel.getHelperRepo().playerDataDatabaseEditHelper.getPlayerByName(name).observe(getViewLifecycleOwner(), new Observer<List<PlayerData>>() {
             @Override
             public void onChanged(List<PlayerData> playerData) {
-
 
                 MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, getResources(), playerData.get(0).getAvatar_id());
 
