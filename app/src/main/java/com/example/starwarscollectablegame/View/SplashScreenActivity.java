@@ -53,10 +53,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         EasySplashScreen config = new EasySplashScreen(SplashScreenActivity.this)
                 .withFullScreen()
                 .withTargetActivity(MainActivity.class)
-                .withSplashTimeOut(3000)
+                .withSplashTimeOut(2000)
                 .withBackgroundColor(Color.parseColor("#000000"))
                 .withHeaderText("Header")
-                .withFooterText("Footer")
+                .withFooterText(getString(R.string.splashscreen_footer))
                 .withBeforeLogoText("Before Logo Text")
                 .withAfterLogoText("After Logo Text")
                 .withLogo(R.mipmap.ic_launcher_round);

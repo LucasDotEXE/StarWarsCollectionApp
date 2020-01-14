@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ import com.example.starwarscollectablegame.R;
 import java.io.InputStream;
 import java.util.Objects;
 
-public class AddPlayerActivity extends AppCompatActivity {
+public class AddEditPlayerActivity extends AppCompatActivity {
 
     public static final String EXTRA_NAME =
                "om.example.starwarscollectablegame.View.ui.profile.EXTRA_NAME";
@@ -46,12 +47,26 @@ public class AddPlayerActivity extends AppCompatActivity {
 
 
         //getActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Player");
+
+
 
         this.recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
 
         AvatarViewAdapter adapter = new AvatarViewAdapter(getApplicationContext(), selectedAvatar);
         this.recyclerView.setAdapter(adapter);
+
+        Intent intent = getIntent();
+
+        if (intent.hasExtra(EXTRA_NAME)) {
+            setTitle("Edit Player");
+            name.setText(intent.getStringExtra(EXTRA_NAME));
+            name.setEnabled(false);
+            name.setInputType(InputType.TYPE_NULL);
+            adapter.setSelected(intent.getIntExtra(EXTRA_AVATARID, R.raw.icon_c3p0));
+        } else {
+            setTitle("Add Player");
+        }
+
         adapter.notifyDataSetChanged();
     }
 

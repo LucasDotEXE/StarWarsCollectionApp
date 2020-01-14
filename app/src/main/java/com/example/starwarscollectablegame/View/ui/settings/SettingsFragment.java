@@ -1,6 +1,7 @@
 package com.example.starwarscollectablegame.View.ui.settings;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -46,8 +48,18 @@ public class SettingsFragment extends Fragment implements SwapiEntryPageListener
         SharedPreferences sharedPref = root.getContext().getSharedPreferences(getString(R.string.preference_id), Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPref.edit();
 
+
+
+
         final Switch swich = root.findViewById(R.id.theme_switch);
         swich.setChecked(sharedPref.getBoolean(getString(R.string.preferences_theme_use_sith), false));
+
+        if (swich.isChecked()) {
+            swich.setText(getString(R.string.settings_switch_on));
+        } else {
+            swich.setText(getString(R.string.settings_switch_off));
+        }
+
         swich.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -67,8 +79,32 @@ public class SettingsFragment extends Fragment implements SwapiEntryPageListener
         refreshDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settingsViewModel.getRepository().clearDatabase();
-                StarWarsDataRepository.fillDatabase(listener, context);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setTitle(getString(R.string.settings_popup_title));
+                builder.setMessage(getString(R.string.settings_popup_message));
+                builder.setPositiveButton("Confirm",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                settingsViewModel.getRepository().clearDatabase();
+                                StarWarsDataRepository.fillDatabase(listener, context);
+                            }
+                        });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
+
+
             }
         });
 

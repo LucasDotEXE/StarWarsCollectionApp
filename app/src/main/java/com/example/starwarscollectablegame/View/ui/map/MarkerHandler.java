@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -41,7 +42,10 @@ public class MarkerHandler {
         return instance;
     }
 
-    public static void handleMarkerClicked(Marker marker, final Context context, final LifecycleOwner lifecycleOwner, final StarWarsDataRepository repository) {
+    public void handleMarkerClicked(Marker marker, final Context context, final LifecycleOwner lifecycleOwner, final StarWarsDataRepository repository) {
+        if (marker.getTitle().equals(context.getString(R.string.marker_yourlocation))) {
+            return;
+        }
         String titleType = marker.getTitle().split(" ")[1].toLowerCase();
         String snipet = marker.getSnippet();
 
@@ -66,9 +70,6 @@ public class MarkerHandler {
 
         } else if (titleType.equals("vehicle")) {
 
-        } else if (titleType.equals("location")) {
-
-            return;
         }
         marker.remove();
     }
@@ -86,7 +87,7 @@ public class MarkerHandler {
                 collectiveLevel += filmCollection.getLevel();
             }
             if (collectiveLevel == filmCollections.size()*3) {
-                Toast.makeText(context, "You have every film maxed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.markerhandler_maxed_film), Toast.LENGTH_SHORT).show();
             } else {
                 updataRandomFilm(filmCollections, repository, context, lifecycleOwner);
             }
@@ -97,7 +98,7 @@ public class MarkerHandler {
                 @Override
                 public void onChanged(List<Film> films) {
                     Toast.makeText(context,
-                            films.get(0).getTitle() + " Leveled Up to Level " + collection.getLevel(),
+                            films.get(0).getTitle() + context.getString(R.string.markerhanlder_levelup) + collection.getLevel(),
                             Toast.LENGTH_SHORT).show();
                 }
             });
@@ -105,8 +106,7 @@ public class MarkerHandler {
         }
     }
 
-    public static MarkerOptions getLocationMarker(LatLng yourPosition, Resources resources, int avatarId) {
-
+    public MarkerOptions getLocationMarker(LatLng yourPosition, FragmentActivity activity, int avatarId) {
         int height = 100;
         int width = 100;
         InputStream imageStream;
@@ -115,16 +115,21 @@ public class MarkerHandler {
         else
             imageStream = resources.openRawResource(avatarId); //TODO lucas: andere avatar als avatarID 0 is?
 
+
+        InputStream imageStream = activity.getResources().openRawResource(avatarId);
         Bitmap b = BitmapFactory.decodeStream(imageStream);
-//        Bitmap b = BitmapFactory.decodeResource(resources, R.drawable.ic_hooded);
+//        Bitmap b = BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_hooded);
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
         BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
 
+        SharedPreferences sharedPref = activity.getSharedPreferences(activity.getString(R.string.preference_id), Context.MODE_PRIVATE);
+        String playerName = sharedPref.getString(activity.getString(R.string.preferences_player_id), "Please Select A Profile");
 
         MarkerOptions markerOptions = new MarkerOptions().position(yourPosition)
-                .title("Your Location")
+                .title(activity.getString(R.string.marker_yourlocation))
                 .icon(smallMarkerIcon)
                 .anchor(0.5f, .05f);
+
         return markerOptions;
     }
 
@@ -152,23 +157,23 @@ public class MarkerHandler {
         BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
                 MarkerOptions markerOptions = new MarkerOptions()
                 .position(diviatedPosition)
-                .snippet("Tap to Reveal\n What you got")
+                .snippet(context.getString(R.string.markerhandler_clicktoreveal))
                 .icon(smallMarkerIcon)
                 .anchor(0.5f, .05f);
 
         double random = Math.random() * 1;
         if (random < 1) {
-            markerOptions.title("Hidden Film");
+            markerOptions.title(context.getString(R.string.markerhandler_hidden_film));
         } else if (random < 2 && random > 1) {
-            markerOptions.title("Hidden Person");
+            markerOptions.title(context.getString(R.string.markerhandler_hidden_people));
         } else if (random < 3 && random > 2) {
-            markerOptions.title("Hidden Planet");
+            markerOptions.title(context.getString(R.string.markerhandler_hidden_planet));
         } else if (random < 4 && random > 3) {
-            markerOptions.title("Hidden Species");
+            markerOptions.title(context.getString(R.string.markerhandler_hidden_species));
         } else if (random < 5 && random > 4) {
-            markerOptions.title("Hidden Starship");
+            markerOptions.title(context.getString(R.string.markerhandler_hidden_starship));
         } else if (random < 6 && random > 5) {
-            markerOptions.title("Hidden Vehicle");
+            markerOptions.title(context.getString(R.string.markerhandler_hidden_vehicle));
         }
         return markerOptions;
     }

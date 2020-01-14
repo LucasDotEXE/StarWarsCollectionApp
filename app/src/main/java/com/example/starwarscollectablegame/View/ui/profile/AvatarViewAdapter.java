@@ -117,4 +117,8 @@ public class AvatarViewAdapter extends RecyclerView.Adapter<AvatarViewAdapter.Av
         }
         return -1;
     }
+
+    public void setSelected(int imgId) {
+        checkedPosition = avatarStrings.indexOf(imgId);
+    }
 }

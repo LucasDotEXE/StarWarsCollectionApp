@@ -246,13 +246,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         viewModel.getHelperRepo().playerDataDatabaseEditHelper.getPlayerByName(name).observe(getViewLifecycleOwner(), new Observer<List<PlayerData>>() {
             @Override
             public void onChanged(List<PlayerData> playerData) {
+                int avatar_id;
+                if (!playerData.isEmpty()) {
+                    avatar_id = playerData.get(0).getAvatar_id();
+                    MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, getActivity(), avatar_id);
 
-                MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, getResources(), playerData.get(0).getAvatar_id());
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
-                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-
-                updateCameraAndBounds(builder, yourPosition, markerOptions);
-
+                    updateCameraAndBounds(builder, yourPosition, markerOptions);
+                }
                 viewModel.getHelperRepo().playerDataDatabaseEditHelper.getPlayerByName(name).removeObserver(this);
             }
         });

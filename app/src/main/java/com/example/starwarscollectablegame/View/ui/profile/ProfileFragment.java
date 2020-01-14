@@ -8,16 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +33,7 @@ import static android.app.Activity.RESULT_OK;
 public class ProfileFragment extends Fragment {
 
     public static final int ADD_NOTE_REQUEST = 1;
+    public static final int EDIT_NOTE_REQUEST = 2;
 
     private ProfileViewModel profileViewModel;
 
@@ -63,7 +62,7 @@ public class ProfileFragment extends Fragment {
         addPlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), AddPlayerActivity.class);
+                Intent intent = new Intent(getContext(), AddEditPlayerActivity.class);
                 startActivityForResult(intent, ADD_NOTE_REQUEST);
             }
         });
@@ -73,9 +72,46 @@ public class ProfileFragment extends Fragment {
         profileViewModel.getAllPlayerData().observe(getViewLifecycleOwner(), new Observer<List<PlayerData>>() {
             @Override
             public void onChanged(List<PlayerData> playerData) {
-                adapter.setPlayerData(playerData);
+                adapter.submitList(playerData);
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                final PlayerData selectedPlayer = adapter.getPlayerDataAt(viewHolder.getAdapterPosition());
+                profileViewModel.delete(selectedPlayer);
+                profileViewModel.getRepository().getFilmCollectionByName(selectedPlayer.getPlayer_name()).observe(getViewLifecycleOwner(), new Observer<List<FilmCollection>>() {
+                    @Override
+                    public void onChanged(List<FilmCollection> filmCollections) {
+                        for (FilmCollection filmCollection : filmCollections) {
+                            profileViewModel.getRepository().filmCollectionDatabaseEditHelper.delete(filmCollection);
+                        }
+                        profileViewModel.getRepository().getFilmCollectionByName(selectedPlayer.getPlayer_name()).removeObserver(this);
+                    }
+                });
+
+                Toast.makeText(getContext(), "Player Deleted: " + selectedPlayer.getPlayer_name(), Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new ProfileViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(PlayerData playerData) {
+                Intent intent = new Intent(getContext(), AddEditPlayerActivity.class);
+                intent.putExtra(AddEditPlayerActivity.EXTRA_NAME, playerData.getPlayer_name());
+                intent.putExtra(AddEditPlayerActivity.EXTRA_AVATARID, playerData.getAvatar_id());
+
+                startActivityForResult(intent, EDIT_NOTE_REQUEST);
+            }
+        });
+
         return root;
     }
 
@@ -84,8 +120,8 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
-            final String name = Objects.requireNonNull(data).getStringExtra(AddPlayerActivity.EXTRA_NAME);
-            int avatarId = data.getIntExtra(AddPlayerActivity.EXTRA_AVATARID, -1);
+            final String name = Objects.requireNonNull(data).getStringExtra(AddEditPlayerActivity.EXTRA_NAME);
+            int avatarId = data.getIntExtra(AddEditPlayerActivity.EXTRA_AVATARID, -1);
 
             PlayerData player = new PlayerData(name, avatarId);
             if (!this.adapter.getPlayerNames().contains(name)) {
@@ -94,7 +130,6 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onChanged(List<Film> films) {
                         for (Film film : films) {
-                            Log.wtf("TEST at ProfileViewModel", name + " added " + film.getEpisodeId());
                             profileViewModel.getRepository().filmCollectionDatabaseEditHelper.insert(new FilmCollection(
                                     name, film.getEpisodeId(), 0, 0));
                         }
@@ -106,7 +141,11 @@ public class ProfileFragment extends Fragment {
             } else {
                 Toast.makeText(getContext(), "Name Already existed", Toast.LENGTH_SHORT).show();
             }
-        } else if (false){
+        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK){
+            final String name = Objects.requireNonNull(data).getStringExtra(AddEditPlayerActivity.EXTRA_NAME);
+            int avatarId = data.getIntExtra(AddEditPlayerActivity.EXTRA_AVATARID, -1);
+
+            profileViewModel.update(new PlayerData(name, avatarId));
 
         }
 
