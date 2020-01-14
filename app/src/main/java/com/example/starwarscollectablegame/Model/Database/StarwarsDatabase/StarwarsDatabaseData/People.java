@@ -40,6 +40,8 @@ public class People extends SwapiEntry implements Serializable {
     @ColumnInfo(name = "vehicles_url")
     private ArrayList<String> vehiclesUrls;
 
+
+
     public People(String created, String edited, String url, String name, String eyeColor, String birthYear, String gender, String hairColor, String height, String homeWorldUrl, String mass, String skinColor, ArrayList<String> filmsUrls, ArrayList<String> speciesUrls, ArrayList<String> starshipsUrls, ArrayList<String> vehiclesUrls) {
         super(created, edited, url);
         this.name = name;

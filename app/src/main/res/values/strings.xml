@@ -25,4 +25,13 @@
     <string name="preferences_theme_open_settings">openSettings</string>
     <string name="preferences_database_loaded">databaseLoaded</string>
     <string name="preferences_player_id">playerId</string>
+    <string name="name">Name</string>
+    <string name="gender">Gender</string>
+    <string name="homeworld">Homeworld</string>
+    <string name="eyecolor">Eyecolor</string>
+    <string name="birthyear">Birthyear</string>
+    <string name="haircolor">Haircolor</string>
+    <string name="height">Height</string>
+    <string name="mass">Mass</string>
+    <string name="unknown">Unknown</string>
 </resources>

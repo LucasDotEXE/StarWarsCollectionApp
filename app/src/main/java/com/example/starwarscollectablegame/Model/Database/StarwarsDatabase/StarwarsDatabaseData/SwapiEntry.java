@@ -2,7 +2,9 @@ package com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.Star
 
 import androidx.room.ColumnInfo;
 
-public abstract class SwapiEntry {
+import java.io.Serializable;
+
+public abstract class SwapiEntry implements Serializable {
 
     @ColumnInfo(name = "created")
     private String created;

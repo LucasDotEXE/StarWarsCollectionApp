@@ -41,7 +41,7 @@ public class MarkerHandler {
         return instance;
     }
 
-    public void handleMarkerClicked(Marker marker, final Context context, final LifecycleOwner lifecycleOwner, final StarWarsDataRepository repository) {
+    public static void handleMarkerClicked(Marker marker, final Context context, final LifecycleOwner lifecycleOwner, final StarWarsDataRepository repository) {
         String titleType = marker.getTitle().split(" ")[1].toLowerCase();
         String snipet = marker.getSnippet();
 
@@ -73,7 +73,7 @@ public class MarkerHandler {
         marker.remove();
     }
 
-    private void updataRandomFilm(final List<FilmCollection> filmCollections, final StarWarsDataRepository repository, final Context context, LifecycleOwner lifecycleOwner) {
+    public static void updataRandomFilm(final List<FilmCollection> filmCollections, final StarWarsDataRepository repository, final Context context, LifecycleOwner lifecycleOwner) {
         if (filmCollections.isEmpty())
             return;
 
@@ -105,12 +105,16 @@ public class MarkerHandler {
         }
     }
 
-    public MarkerOptions getLocationMarker(LatLng yourPosition, Resources resources, int avatarId) {
+    public static MarkerOptions getLocationMarker(LatLng yourPosition, Resources resources, int avatarId) {
+
         int height = 100;
         int width = 100;
+        InputStream imageStream;
+        if (avatarId != 0)
+            imageStream = resources.openRawResource(avatarId);
+        else
+            imageStream = resources.openRawResource(avatarId); //TODO lucas: andere avatar als avatarID 0 is?
 
-
-        InputStream imageStream = resources.openRawResource(avatarId);
         Bitmap b = BitmapFactory.decodeStream(imageStream);
 //        Bitmap b = BitmapFactory.decodeResource(resources, R.drawable.ic_hooded);
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
@@ -124,7 +128,7 @@ public class MarkerHandler {
         return markerOptions;
     }
 
-    public MarkerOptions getRandomHiddenMarker(LatLng yourPosition, Resources resources, Context context) {
+    public static MarkerOptions getRandomHiddenMarker(LatLng yourPosition, Resources resources, Context context) {
         double standardDif = 0.001;
 
         double latDif = (Math.random() * standardDif * 2) - standardDif;

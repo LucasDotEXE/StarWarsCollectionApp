@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 import com.example.starwarscollectablegame.R;
 
+import org.w3c.dom.Text;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -45,12 +47,7 @@ public class PersonFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments()!= null)
-        {
-            //Todo: Parcelable
-            people = (People) getArguments().getSerializable("object");
-            level = getArguments().getInt("level");
-        }
+
     }
 
     @Override
@@ -59,6 +56,7 @@ public class PersonFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_person, container, false);
+        TextView name = view.findViewById(R.id.people_fragment_name);
         TextView eyecolor = view.findViewById(R.id.people_fragment_eyecolor);
         TextView birthyear = view.findViewById(R.id.people_fragment_birthyear);
         TextView gender = view.findViewById(R.id.people_fragment_gender);
@@ -69,21 +67,25 @@ public class PersonFragment extends Fragment {
         RatingBar ratingBar = view.findViewById(R.id.people_fragment_ratingbar);
 
 
-        ratingBar.setRating(this.level);
-        if (level >= 1){
-            gender.setText(this.people.getGender());
-            homeworld.setText(people.getHomeWorldUrl());
-        }
-        if (level >= 2)
-        {
-            eyecolor.setText(this.people.getEyeColor());
-            birthyear.setText(this.people.getBirthYear());
-            haircolor.setText(this.people.getHairColor());
-        }
-        if (level >= 3)
-        {
-            height.setText(people.getHeight());
-            mass.setText(people.getMass());
+        if (getArguments()!= null) {
+            //Todo: Parcelable
+            people = (People) getArguments().getSerializable("object");
+            level = getArguments().getInt("level");
+            name.setText(people.getName());
+            ratingBar.setRating(this.level);
+            if (level >= 1) {
+                gender.setText(this.people.getGender());
+                homeworld.setText(people.getHomeWorldUrl());
+            }
+            if (level >= 2) {
+                eyecolor.setText(this.people.getEyeColor());
+                birthyear.setText(this.people.getBirthYear());
+                haircolor.setText(this.people.getHairColor());
+            }
+            if (level >= 3) {
+                height.setText(people.getHeight());
+                mass.setText(people.getMass());
+            }
         }
         return view;
     }

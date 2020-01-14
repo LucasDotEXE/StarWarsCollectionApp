@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 import com.example.starwarscollectablegame.R;
+import com.example.starwarscollectablegame.View.DetailFragments.PersonActivity;
 import com.example.starwarscollectablegame.View.DetailFragments.PersonFragment;
 import com.example.starwarscollectablegame.View.ui.collection.films.FilmAdapter;
 
@@ -64,7 +65,7 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PeopleView
             this.lvlBarr = itemView.findViewById(R.id.film_item_lvl);
 
             itemView.setOnClickListener((view) -> {
-                Intent intent = new Intent(view.getContext(), PersonFragment.class);
+                Intent intent = new Intent(view.getContext(), PersonActivity.class);
                 People person = people.get(PeopleViewHolder.super.getAdapterPosition());
                 intent.putExtra("object", person);
                 intent.putExtra("level", 2);
