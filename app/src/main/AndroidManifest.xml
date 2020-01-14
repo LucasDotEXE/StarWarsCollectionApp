@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeSith"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".View.ui.profile.AddPlayerActivity"
+        <activity android:name=".View.ui.profile.AddEditPlayerActivity"
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".View.MainActivity"
