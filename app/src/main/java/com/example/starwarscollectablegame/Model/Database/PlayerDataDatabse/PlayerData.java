@@ -15,6 +15,11 @@ public class PlayerData {
 
     private int avatar_id;
 
+    public PlayerData(int player_id, String player_name, int avatar_id) {
+        this.player_id = player_id;
+        this.player_name = player_name;
+        this.avatar_id = avatar_id;
+    }
 
     public int getPlayer_id() {
         return player_id;

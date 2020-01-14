@@ -1,6 +1,7 @@
 package com.example.starwarscollectablegame.View.ui.profile;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,18 @@ import java.util.List;
 public class ProfileViewAdapter extends RecyclerView.Adapter<ProfileViewAdapter.SingleViewHolder> {
     private Context context;
     private List<PlayerData> playerData;
+
+
     // if checkedPosition = -1, there is no default selection
     // if checkedPosition = 0, 1st item is selected by default
-    private int checkedPosition = 0;
+    private int checkedPosition;
 
     public ProfileViewAdapter(Context context) {
         this.context = context;
         this.playerData = new ArrayList<>();
+
+        final SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_id), Context.MODE_PRIVATE);
+        this.checkedPosition = sharedPref.getInt(context.getString(R.string.preferences_player_id), -1);
     }
 
     public void setPlayerData(List<PlayerData> playerData) {
@@ -82,6 +88,9 @@ public class ProfileViewAdapter extends RecyclerView.Adapter<ProfileViewAdapter.
                         notifyItemChanged(checkedPosition);
                         checkedPosition = getAdapterPosition();
                     }
+                    final SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_id), Context.MODE_PRIVATE);
+                    final SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt(context.getString(R.string.preferences_player_id), getAdapterPosition()).apply();
                 }
             });
         }

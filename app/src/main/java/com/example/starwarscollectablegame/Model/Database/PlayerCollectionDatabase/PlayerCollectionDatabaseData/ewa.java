@@ -1,4 +1,4 @@
-package com.example.starwarscollectablegame.Model.PlayerCollectionDatabase.PlayerCollectionDatabaseData;
+package com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData;
 
 public abstract class ewa {
 }

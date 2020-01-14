@@ -30,7 +30,25 @@ public class ProfileViewModel extends AndroidViewModel {
         return repository;
     }
 
+    public void insert(PlayerData playerData) {
+        repository.playerDataDatabaseEditHelper.insert(playerData);
+    }
+
+    public void update(PlayerData playerData) {
+        repository.playerDataDatabaseEditHelper.update(playerData);
+    }
+
+    public void delete(PlayerData playerData) {
+        repository.playerDataDatabaseEditHelper.delete(playerData);
+    }
+
     public LiveData<List<PlayerData>> getAllPlayerData() {
         return allPlayerData;
     }
+
+    public LiveData<List<PlayerData>> getPlayerById(int id) {
+        return repository.playerDataDatabaseEditHelper.getPlayerById(id);
+    }
+
+
 }

@@ -1,9 +1,8 @@
-package com.example.starwarscollectablegame.Model.StarwarsDatabase.StarwarsDatabaseData;
+package com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.util.ArrayList;

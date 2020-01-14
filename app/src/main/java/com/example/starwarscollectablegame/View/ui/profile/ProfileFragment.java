@@ -8,11 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,10 +24,8 @@ import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDataba
 import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerData;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
-import com.example.starwarscollectablegame.View.AddPlayerActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
@@ -51,9 +47,6 @@ public class ProfileFragment extends Fragment {
         final RecyclerView recyclerView = root.findViewById(R.id.player_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-        final Spinner spinner = root.findViewById(R.id.spinner);
-
         final LifecycleOwner owner = this;
         final Context context = this.getContext();
 
@@ -62,84 +55,30 @@ public class ProfileFragment extends Fragment {
 
 
         Log.wtf(TAG, "Is het de defoult val?  :   " + sharedPref.getInt(getString(R.string.preferences_player_id), 437854378));
-        spinner.setSelection(sharedPref.getInt(getString(R.string.preferences_player_id), 0));
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                String playerName = (String) parent.getItemAtPosition(position);
-                if (playerName.split(" ").length <= 0) {
-                    Log.wtf(TAG, "ELVIS IS EXITING THE METHOD");
-                    return;
-                }
-                String thing = playerName.split(" ")[0];
-                int playerId = Integer.parseInt(thing.substring(0, thing.length()-1));
-
-                Log.w(TAG, "Ewa ik zet het id naar: " + playerId);
-                editor.putInt(getString(R.string.preferences_player_id), playerId).commit();
-                Log.wtf(TAG, "Is het de defoult val?  :   " + sharedPref.getInt(getString(R.string.preferences_player_id), 437854378));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        profileViewModel.getRepository().getFilmCollection().observe(this, new Observer<List<FilmCollection>>() {
-            @Override
-            public void onChanged(List<FilmCollection> filmCollections) {
-
-                ArrayList<String> playerId = new ArrayList<>();
-                ArrayList<String> playerNames = new ArrayList<>();
-                for (FilmCollection filmCollection : filmCollections) {
-                    if (!playerId.contains(filmCollection.getPlayer_id() + "")) {
-                        playerId.add(filmCollection.getPlayer_id() + "");
-                        playerNames.add(filmCollection.getPlayer_id() + ".  " +filmCollection.getPlayer_name());
-                    }
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-                       android.R.layout.simple_spinner_item, playerNames.toArray(new String[] {}));
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-            }
-        });
-
 
         playerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 profileViewModel.getAllPlayerData().observe(owner, new Observer<List<PlayerData>>() {
                     @Override
-                    public void onChanged(List<PlayerData> playerData) {
-                        //todo Add an add method for the database instead of my old scuffed method
-                    }
-                });
-
-                profileViewModel.getRepository().getFilmCollection().observe(owner, new Observer<List<FilmCollection>>() {
-                    @Override
-                    public void onChanged(List<FilmCollection> filmCollections) {
-                        final ArrayList<String> playerId = new ArrayList<>();
-                        for (FilmCollection filmCollection : filmCollections) {
-                            if (!playerId.contains(filmCollection.getPlayer_id() + "")) {
-                                playerId.add(filmCollection.getPlayer_id() + "");
-                            }
-                        }
-
+                    public void onChanged(final List<PlayerData> playerData) {
                         profileViewModel.getRepository().getAllFilms().observe(owner, new Observer<List<Film>>() {
                             @Override
                             public void onChanged(List<Film> films) {
                                 for (Film film : films) {
-                                    Log.wtf(TAG, "Added Filmcolleciont, " + playerId.size());
-                                    profileViewModel.getRepository().filmCollectionDatabaseEditHelper.insert(new FilmCollection(playerId.size(), playerName.getText().toString(), film.getEpisodeId(), 0, 0));
+                                    profileViewModel.getRepository().filmCollectionDatabaseEditHelper.insert(
+                                            new FilmCollection(playerData.size(), playerName.getText().toString(),
+                                                    film.getEpisodeId(), 0, 0));
                                 }
                                 profileViewModel.getRepository().getAllFilms().removeObserver(this);
                                 playerName.setText("");
                             }
                         });
-                        profileViewModel.getRepository().getFilmCollection().removeObserver(this);
+                        profileViewModel.insert(new PlayerData(playerData.size(), playerName.getText().toString(), 2));
+
+                        Toast.makeText(context, "Inserted PlayerData: " + playerData.size() + "  " + playerName.getText().toString(), Toast.LENGTH_SHORT).show();
+                        playerName.setText("");
+                        profileViewModel.getAllPlayerData().removeObserver(this);
                     }
                 });
             }

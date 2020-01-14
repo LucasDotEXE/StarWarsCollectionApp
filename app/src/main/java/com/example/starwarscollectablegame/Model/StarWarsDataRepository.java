@@ -13,6 +13,7 @@ import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDataba
 import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
 import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerData;
 import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerDataDao;
+import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerDataDatabaseEditHelper;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.FilmDao;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.PeopleDao;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.PlanetDao;
@@ -64,6 +65,8 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
 
     public com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DatabaseEditHelper<FilmCollection> filmCollectionDatabaseEditHelper;
 
+    public PlayerDataDatabaseEditHelper playerDataDatabaseEditHelper;
+
     private PlayerDataDao playerDataDao;
 
     private LiveData<List<PlayerData>> allPlayerData;
@@ -106,7 +109,9 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
 
         this.filmCollection = this.filmCollectionDao.getFilmCollection();
 
+
         this.playerDataDao = database.playerDataDao();
+        this.playerDataDatabaseEditHelper = new PlayerDataDatabaseEditHelper(this.playerDataDao);
 
         this.allPlayerData = this.playerDataDao.getAllPlayers() ;
 
@@ -137,6 +142,8 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         this.speciesDatabaseEditor.deleteAll();
         this.starshipDatabaseEditor.deleteAll();
         this.vehicleDatabaseEditor.deleteAll();
+        this.playerDataDatabaseEditHelper.deleteAll();
+        this.filmCollectionDatabaseEditHelper.delleteAll();
     }
 
     public LiveData<List<Film>> getFilmById(int id) {

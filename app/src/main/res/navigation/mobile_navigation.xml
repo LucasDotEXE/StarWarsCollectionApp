@@ -42,4 +42,28 @@
         android:label="@string/menu_Collection"
         tools:layout="@layout/fragment_collection_people"/>
 
+    <fragment
+        android:id="@+id/nav_planet"
+        android:name="com.example.starwarscollectablegame.View.ui.collection.planets.PlanetsFragment"
+        android:label="@string/menu_Collection"
+        tools:layout="@layout/fragment_collection_planet"/>
+
+    <fragment
+        android:id="@+id/nav_species"
+        android:name="com.example.starwarscollectablegame.View.ui.collection.species.SpeciesFragment"
+        android:label="@string/menu_Collection"
+        tools:layout="@layout/fragment_collection_species"/>
+
+    <fragment
+        android:id="@+id/nav_starships"
+        android:name="com.example.starwarscollectablegame.View.ui.collection.starships.StarshipsFragment"
+        android:label="@string/menu_Collection"
+        tools:layout="@layout/fragment_collection_starship"/>
+
+    <fragment
+        android:id="@+id/nav_vehiles"
+        android:name="com.example.starwarscollectablegame.View.ui.collection.vehicles.VehiclesFragment"
+        android:label="@string/menu_Collection"
+        tools:layout="@layout/fragment_collection_vehicles"/>
+
 </navigation>

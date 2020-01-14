@@ -13,7 +13,7 @@
     android:theme="@style/AppTheme.ThemeOverlay">
 
     <ImageView
-        android:id="@+id/check_sign"
+        android:id="@+id/avatar_check_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/nav_header_desc"
