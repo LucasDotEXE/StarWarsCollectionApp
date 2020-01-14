@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
@@ -49,16 +50,6 @@ public class PersonFragment extends Fragment {
             //Todo: Parcelable
             people = (People) getArguments().getSerializable("object");
             level = getArguments().getInt("level");
-            /* For activity
-                        SwapiEntry swapiEntry = (SwapiEntry) getArguments().getSerializable("swapientry");
-            switch ((String)getArguments().get("swapitype")) {
-                case "people":
-
-                break;
-                default:
-                    break;
-            }*/
-
         }
     }
 
@@ -75,14 +66,24 @@ public class PersonFragment extends Fragment {
         TextView height = view.findViewById(R.id.people_fragment_height);
         TextView homeworld = view.findViewById(R.id.people_fragment_homeworld);
         TextView mass = view.findViewById(R.id.people_fragment_mass);
+        RatingBar ratingBar = view.findViewById(R.id.people_fragment_ratingbar);
 
-        homeworld.setText(people.getHomeWorldUrl());
-        if (level > 1){
 
+        ratingBar.setRating(this.level);
+        if (level >= 1){
+            gender.setText(this.people.getGender());
+            homeworld.setText(people.getHomeWorldUrl());
         }
-        if (level > 2)
+        if (level >= 2)
         {
-
+            eyecolor.setText(this.people.getEyeColor());
+            birthyear.setText(this.people.getBirthYear());
+            haircolor.setText(this.people.getHairColor());
+        }
+        if (level >= 3)
+        {
+            height.setText(people.getHeight());
+            mass.setText(people.getMass());
         }
         return view;
     }
