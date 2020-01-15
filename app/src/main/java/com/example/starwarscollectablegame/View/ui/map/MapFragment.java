@@ -72,11 +72,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
-        if (savedInstanceState != null) {
+        /*if (savedInstanceState != null) {
             viewModel = (MapViewModel) savedInstanceState.getSerializable("viewmodel");
             addMarkersToMap(viewModel.markers);
         }
-        else
+        else*/
             viewModel = ViewModelProviders.of(this).get(MapViewModel.class);
 
 
@@ -138,7 +138,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState)
     {
-        savedInstanceState.putSerializable("viewmodel", viewModel);
+        //savedInstanceState.putSerializable("viewmodel", viewModel);
         super.onSaveInstanceState(savedInstanceState);
     }
 

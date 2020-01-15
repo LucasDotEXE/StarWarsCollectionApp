@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapViewModel extends AndroidViewModel implements Serializable {
+public class MapViewModel extends AndroidViewModel  {
 
 //    private PlayerCollectionDataRepository repository;
     public int markerCounter = 0;
