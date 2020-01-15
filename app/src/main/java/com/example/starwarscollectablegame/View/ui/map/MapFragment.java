@@ -151,10 +151,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         mMap.addMarker(
                                 MarkerHandler.getInstance().getRandomHiddenMarker(yourPosition ,
                                         getResources(), getContext()));
-                        viewModel.getGeoFenceHandler().addGeoFence(
-                                m.getPosition().latitude,
-                                m.getPosition().longitude,
-                                Integer.toString(viewModel.getMarkerCounter()));
+//                        viewModel.getGeoFenceHandler().addGeoFence(
+//                                m.getPosition().latitude,
+//                                m.getPosition().longitude,
+//                                Integer.toString(viewModel.getMarkerCounter()));
                         viewModel.markers.put(Integer.toString(viewModel.getMarkerCounter()),m);
             } catch (IllegalStateException ex) {
                 Log.w(TAG, "UnstableTimerMethod replaced with new one");
@@ -241,15 +241,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         final LatLng yourPosition = new LatLng(location.getLatitude(), location.getLongitude());
         this.yourPosition = yourPosition;
 
-        final SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.preference_id), Context.MODE_PRIVATE);
+        final SharedPreferences sharedPref = Objects.requireNonNull(getContext()).getSharedPreferences(getString(R.string.preference_id), Context.MODE_PRIVATE);
         final String name = sharedPref.getString(getString(R.string.preferences_player_id), "Not Found");
+//        final String name = "Lucas";
         viewModel.getHelperRepo().playerDataDatabaseEditHelper.getPlayerByName(name).observe(getViewLifecycleOwner(), new Observer<List<PlayerData>>() {
             @Override
             public void onChanged(List<PlayerData> playerData) {
                 int avatar_id;
                 if (!playerData.isEmpty()) {
                     avatar_id = playerData.get(0).getAvatar_id();
-                    MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, getActivity(), avatar_id);
+                    MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, Objects.requireNonNull(getActivity()), avatar_id);
 
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
 

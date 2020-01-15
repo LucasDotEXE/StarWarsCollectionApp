@@ -57,6 +57,7 @@ public class ProfileFragment extends Fragment {
         this.adapter = new ProfileViewAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
+//        editor.putString(getString(R.string.preferences_player_id), "dsafsa").apply();
         Log.wtf(TAG, "Is het de defoult val?  :   " + sharedPref.getString(getString(R.string.preferences_player_id), "Not Found"));
 
         addPlayerButton.setOnClickListener(new View.OnClickListener() {

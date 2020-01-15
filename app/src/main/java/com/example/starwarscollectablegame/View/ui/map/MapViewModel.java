@@ -29,7 +29,7 @@ public class MapViewModel extends AndroidViewModel {
     public int markerCounter = 0;
     public Map<String, Marker> markers = new HashMap<>();
 
-    private GeoFenceHandler geoFenceHandler;
+    //private GeoFenceHandler geoFenceHandler;
     private StarWarsDataRepository helperRepo;
 
     private LiveData<List<FilmCollection>> filmCollection;
@@ -57,8 +57,8 @@ public class MapViewModel extends AndroidViewModel {
 
         filmCollection = this.helperRepo.getFilmCollection();
         allFilms = helperRepo.getAllFilms();
-        this.geoFenceHandler = new GeoFenceHandler(this.getApplication().getApplicationContext(), this);
-        this.getApplication().registerReceiver(geoFenceHandler, new IntentFilter(Intent.ACTION_RUN)); // either this or manifest..
+        //this.geoFenceHandler = new GeoFenceHandler(this.getApplication().getApplicationContext(), this);
+        //this.getApplication().registerReceiver(geoFenceHandler, new IntentFilter(Intent.ACTION_RUN)); // either this or manifest..
     }
 
     public LiveData<List<Film>> getAllFilms() {
@@ -81,9 +81,9 @@ public class MapViewModel extends AndroidViewModel {
         return helperRepo;
     }
 
-    public GeoFenceHandler getGeoFenceHandler() {
-        return geoFenceHandler;
-    }
+//    public GeoFenceHandler getGeoFenceHandler() {
+//        return geoFenceHandler;
+//    }
 
     public int getMarkerCounter() {
         return markerCounter;
