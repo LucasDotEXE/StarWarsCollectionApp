@@ -200,6 +200,9 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         return this.allPlayerData;
     }
 
+    /*private static class GetHomeworldNameFromPeopleAsyncTask extends AsyncTask<People, void, <LiveData<List<Planet>>>
+    */
+
     private static class GetFilmByIdAsyncTask extends AsyncTask<Integer, Void, LiveData<List<Film>>> {
 
         private FilmDao filmDao;

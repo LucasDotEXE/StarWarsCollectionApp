@@ -29,20 +29,7 @@ import static com.example.starwarscollectablegame.View.ui.profile.AvatarViewAdap
 
 public class MarkerHandler {
 
-    private static MarkerHandler instance;
-
-    private MarkerHandler() {
-
-    }
-
-    public static MarkerHandler getInstance() {
-        if (instance == null) {
-            instance = new MarkerHandler();
-        }
-        return instance;
-    }
-
-    public void handleMarkerClicked(Marker marker, final Context context, final LifecycleOwner lifecycleOwner, final StarWarsDataRepository repository) {
+    public static void handleMarkerClicked(Marker marker, final Context context, final LifecycleOwner lifecycleOwner, final StarWarsDataRepository repository) {
         if (marker.getTitle().equals(context.getString(R.string.marker_yourlocation))) {
             return;
         }
@@ -106,7 +93,7 @@ public class MarkerHandler {
         }
     }
 
-    public MarkerOptions getLocationMarker(LatLng yourPosition, FragmentActivity activity, int avatarId) {
+    public static MarkerOptions getLocationMarker(LatLng yourPosition, FragmentActivity activity, int avatarId) {
         int height = 100;
         int width = 100;
         InputStream imageStream = activity.getResources().openRawResource(avatarId);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Planet;
+import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
 import com.example.starwarscollectablegame.R;
 
 import org.w3c.dom.Text;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,6 +71,7 @@ public class PersonFragment extends Fragment {
         TextView mass = view.findViewById(R.id.people_fragment_mass);
         RatingBar ratingBar = view.findViewById(R.id.people_fragment_ratingbar);
 
+        StarWarsDataRepository repo = new StarWarsDataRepository(this.getActivity().getApplication());
 
         if (getArguments()!= null) {
             //Todo: Parcelable
@@ -75,6 +81,18 @@ public class PersonFragment extends Fragment {
             ratingBar.setRating(this.level);
             if (level >= 1) {
                 gender.setText(this.people.getGender());
+                repo.getAllPlanet().observe(getViewLifecycleOwner(), new Observer<List<Planet>>() {
+                    @Override
+                    public void onChanged(List<Planet> planets) {
+                        for(Planet p : planets)
+                        {
+                            if (p.getUrl().equals(people.getHomeWorldUrl())) {
+                                homeworld.setText(p.getName());
+                                break;
+                            }
+                        }
+                    }
+                });
                 homeworld.setText(people.getHomeWorldUrl());
             }
             if (level >= 2) {

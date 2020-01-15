@@ -110,7 +110,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         this.mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                MarkerHandler.getInstance().handleMarkerClicked(marker, getContext(), lifecycleOwner, viewModel.getHelperRepo());
+                MarkerHandler.handleMarkerClicked(marker, getContext(), lifecycleOwner, viewModel.getHelperRepo());
             }
         });
 
@@ -140,16 +140,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             int timeInMs = sec * 1000 + min * 60000;
             spawnHandler.postDelayed(spawnNewCollectionMarker, timeInMs);
 
-            /*if (markers.size() >= 5) {
-                Marker marker = markers.get(0);
+            if (viewModel.markers.size() >= 5) {
+                Marker marker = viewModel.markers.get(0);
                 marker.remove();
-                markers.remove(marker);
+                viewModel.markers.remove(marker);
 
-            }*/
+            }
             try {
                         Marker m =
                         mMap.addMarker(
-                                MarkerHandler.getInstance().getRandomHiddenMarker(yourPosition ,
+                                MarkerHandler.getRandomHiddenMarker(yourPosition ,
                                         getResources(), getContext()));
 //                        viewModel.getGeoFenceHandler().addGeoFence(
 //                                m.getPosition().latitude,
@@ -247,15 +247,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         viewModel.getHelperRepo().playerDataDatabaseEditHelper.getPlayerByName(name).observe(getViewLifecycleOwner(), new Observer<List<PlayerData>>() {
             @Override
             public void onChanged(List<PlayerData> playerData) {
-                int avatar_id;
+                int avatar_id = R.raw.icon_luke_skywalker;
                 if (!playerData.isEmpty()) {
                     avatar_id = playerData.get(0).getAvatar_id();
-                    MarkerOptions markerOptions = MarkerHandler.getInstance().getLocationMarker(yourPosition, Objects.requireNonNull(getActivity()), avatar_id);
+                }
+                    MarkerOptions markerOptions = MarkerHandler.getLocationMarker(yourPosition, Objects.requireNonNull(getActivity()), avatar_id);
 
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
                     updateCameraAndBounds(builder, yourPosition, markerOptions);
-                }
+
                 viewModel.getHelperRepo().playerDataDatabaseEditHelper.getPlayerByName(name).removeObserver(this);
             }
         });
