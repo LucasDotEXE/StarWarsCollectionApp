@@ -125,7 +125,7 @@ public class GeoFenceHandler extends BroadcastReceiver {
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
             for (Geofence geofence : triggeringGeofences)
             {
-                String key = geofence.getRequestId();
+                /*String key = geofence.getRequestId();
                 Marker m = viewModel.markers.get(key);
                 String titleType = m.getTitle().split(" ")[1].toLowerCase();
 
@@ -133,7 +133,7 @@ public class GeoFenceHandler extends BroadcastReceiver {
                 {
                     MarkerHandler.updataRandomFilm(viewModel.getFilmCollection().getValue(),viewModel.getHelperRepo(),this.context,viewModel.getApplication());
 
-                }
+                }*/
             }
 
 
