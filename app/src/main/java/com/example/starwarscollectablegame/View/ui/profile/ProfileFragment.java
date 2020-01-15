@@ -20,8 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.PersonColleciton;
 import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerData;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 import com.example.starwarscollectablegame.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -97,6 +99,15 @@ public class ProfileFragment extends Fragment {
                         profileViewModel.getRepository().getFilmCollectionByName(selectedPlayer.getPlayer_name()).removeObserver(this);
                     }
                 });
+                profileViewModel.getRepository().getPeopleCollectionByName(selectedPlayer.getPlayer_name()).observe(getViewLifecycleOwner(), new Observer<List<PersonColleciton>>() {
+                    @Override
+                    public void onChanged(List<PersonColleciton> personCollecitons) {
+                        for (PersonColleciton personColleciton : personCollecitons) {
+                            profileViewModel.getRepository().personCollectionDatabaseEditHelper.delete(personColleciton);
+                        }
+                        profileViewModel.getRepository().getPeopleCollectionByName(selectedPlayer.getPlayer_name()).removeObserver(this);
+                    }
+                });
 
                 Toast.makeText(getContext(), "Player Deleted: " + selectedPlayer.getPlayer_name(), Toast.LENGTH_SHORT).show();
             }
@@ -135,6 +146,18 @@ public class ProfileFragment extends Fragment {
                                     name, film.getEpisodeId(), 0, 0));
                         }
                         profileViewModel.getRepository().getAllFilms().removeObserver(this);
+                    }
+                });
+                profileViewModel.getRepository().getAllPeople().observe(getViewLifecycleOwner(), new Observer<List<People>>() {
+                    @Override
+                    public void onChanged(List<People> people) {
+                        for (People person : people) {
+                            profileViewModel.getRepository().personCollectionDatabaseEditHelper.insert(new PersonColleciton(
+                                    name, person.getName(), 0, 0
+                            ));
+                            Log.wtf(TAG, "Added personCollectionData: " + name + " - " + person.getName());
+                        }
+                        profileViewModel.getRepository().getAllPeople().removeObserver(this);
                     }
                 });
 

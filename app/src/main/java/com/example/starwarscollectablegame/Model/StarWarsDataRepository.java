@@ -1,6 +1,7 @@
 package com.example.starwarscollectablegame.Model;
 
 import android.app.Application;
+import android.app.Person;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -10,7 +11,9 @@ import androidx.lifecycle.LiveData;
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.StarwarsApiManager;
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryPageListener;
 import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DaoInterfaces.FilmCollectionDao;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DaoInterfaces.PeopleCollectionDao;
 import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.PersonColleciton;
 import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerData;
 import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerDataDao;
 import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerDataDatabaseEditHelper;
@@ -60,10 +63,14 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
     public DatabaseEditHelper<Vehicle> vehicleDatabaseEditor;
 
     private FilmCollectionDao filmCollectionDao;
+    private PeopleCollectionDao peopleCollectionDao;
 
     private LiveData<List<FilmCollection>> filmCollection;
+    private LiveData<List<PersonColleciton>> peopleCollection;
 
     public com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DatabaseEditHelper<FilmCollection> filmCollectionDatabaseEditHelper;
+    public com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DatabaseEditHelper<PersonColleciton> personCollectionDatabaseEditHelper;
+
 
     public PlayerDataDatabaseEditHelper playerDataDatabaseEditHelper;
 
@@ -106,8 +113,10 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         this.vehicleDatabaseEditor = new DatabaseEditHelper<>(this.vehicleDao);
 
         this.filmCollectionDao = database.filmCollectionDao();
+        this.peopleCollectionDao = database.peopleCollectionDao();
 
         this.filmCollection = this.filmCollectionDao.getFilmCollection();
+        this.peopleCollection = this.peopleCollectionDao.getPeopleCollection();
 
 
         this.playerDataDao = database.playerDataDao();
@@ -117,14 +126,11 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
 
 
         this.filmCollectionDatabaseEditHelper = new com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DatabaseEditHelper<>(this.filmCollectionDao);
-
+        this.personCollectionDatabaseEditHelper = new com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DatabaseEditHelper<>(this.peopleCollectionDao);
 
     }
 
     public static void fillDatabase(SwapiEntryPageListener listener, Context context) {
-        if (!true) {
-            return;
-        }
         StarwarsApiManager apiManager = new StarwarsApiManager(context);
         Log.i(TAG, "Filling database");
         apiManager.getSwapiEntryPage(listener, StarWarsDataType.FILM);
@@ -157,6 +163,17 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         return null;
     }
 
+    public LiveData<List<People>> getPersonById(String name) {
+        try {
+//            Film film = new GetFilmByIdAsyncTask(this.filmDao).execute(2).get();
+//            Log.wtf("starwarsRepo", film.toString());
+            return new GetPeopleByIdAsyncTask(this.peopleDao).execute(name).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public LiveData<List<FilmCollection>> getFilmCollectionByName(String name) {
         try {
             return new GetFilmCollectionByIdAsyncTask(filmCollectionDao).execute(name).get();
@@ -165,6 +182,17 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         }
         Log.wtf(TAG, "OOps couldn't get FilmCollectione by Id");
         return new LiveData<List<FilmCollection>>() {
+        };
+    }
+
+    public LiveData<List<PersonColleciton>> getPeopleCollectionByName (String name) {
+        try {
+            return new GetPeopleCollectionByIdAsyncTask(peopleCollectionDao).execute(name).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.wtf(TAG, "Oops couldn't get PersonCollectione by Id");
+        return new LiveData<List<PersonColleciton>>() {
         };
     }
 
@@ -196,6 +224,10 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         return filmCollection;
     }
 
+    public LiveData<List<PersonColleciton>> getPeopleCollection() {
+        return peopleCollection;
+    }
+
     public LiveData<List<PlayerData>> getAllPlayerData() {
         return this.allPlayerData;
     }
@@ -218,6 +250,21 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         }
     }
 
+    private static class GetPeopleByIdAsyncTask extends AsyncTask<String, Void, LiveData<List<People>>> {
+
+        private PeopleDao filmDao;
+
+        public GetPeopleByIdAsyncTask(PeopleDao filmDao) {
+            this.filmDao = filmDao;
+        }
+
+        @Override
+        protected LiveData<List<People>> doInBackground(String... strings) {
+            LiveData<List<People>> film = filmDao.getPeopleById(strings[0]);
+            return film;
+        }
+    }
+
     private static class GetFilmCollectionByIdAsyncTask extends AsyncTask<String, Void, LiveData<List<FilmCollection>>> {
 
         private FilmCollectionDao filmDao;
@@ -230,6 +277,20 @@ public class StarWarsDataRepository implements SwapiEntryPageListener {
         protected LiveData<List<FilmCollection>> doInBackground(String... strings) {
             LiveData<List<FilmCollection>> film = filmDao.getFilmCollectionByPlayerID(strings[0]);
             return film;
+        }
+    }
+
+    private static class GetPeopleCollectionByIdAsyncTask extends AsyncTask<String, Void, LiveData<List<PersonColleciton>>> {
+        private PeopleCollectionDao peopleDao;
+
+        public GetPeopleCollectionByIdAsyncTask(PeopleCollectionDao peopleDao) {
+            this.peopleDao = peopleDao;
+        }
+
+        @Override
+        protected LiveData<List<PersonColleciton>> doInBackground(String... strings) {
+            LiveData<List<PersonColleciton>> person = peopleDao.getPeopleCollectionByPlayerID(strings[0]);
+            return person;
         }
     }
 

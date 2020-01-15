@@ -1,10 +1,12 @@
 package com.example.starwarscollectablegame.View.ui.map;
 
+import android.app.Person;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
@@ -13,6 +15,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.PersonColleciton;
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.R;
@@ -47,7 +51,16 @@ public class MarkerHandler {
                     playerFilmCollecion.removeObserver(this);
                 }
             });
-        } else if (titleType.equals("person")) {
+        } else if (titleType.equals("person") || titleType.equals("persoon")) {
+            Log.wtf("sdgfqweyqwduyfgeqiuhfqwiuyf", "dfhasdifuhidufhqwf");
+            final LiveData<List<PersonColleciton>> playerFilmCollecion = repository.getPeopleCollectionByName(sharedPref.getString(context.getString(R.string.preferences_player_id), ""));
+            playerFilmCollecion.observe(lifecycleOwner, new Observer<List<PersonColleciton>>() {
+                @Override
+                public void onChanged(List<PersonColleciton> filmCollections) {
+                    updataRandomPerson(filmCollections, repository, context, lifecycleOwner);
+                    playerFilmCollecion.removeObserver(this);
+                }
+            });
 
         } else if (titleType.equals("planet")) {
 
@@ -86,6 +99,38 @@ public class MarkerHandler {
                 public void onChanged(List<Film> films) {
                     Toast.makeText(context,
                             films.get(0).getTitle() + context.getString(R.string.markerhanlder_levelup) + collection.getLevel(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+    }
+
+    public static void updataRandomPerson(final List<PersonColleciton> personCollecitons, final StarWarsDataRepository repository, final Context context, LifecycleOwner lifecycleOwner) {
+        if (personCollecitons.isEmpty())
+            return;
+
+        int i = (int) (Math.random() * personCollecitons.size());
+        final PersonColleciton collection = personCollecitons.get(i);
+        int level = collection.getLevel();
+        if (level >= 3) {
+            int collectiveLevel = 0;
+            for (PersonColleciton filmCollection : personCollecitons) {
+                collectiveLevel += filmCollection.getLevel();
+            }
+            if (collectiveLevel == personCollecitons.size()*3) {
+                Toast.makeText(context, context.getString(R.string.markerhandler_maxed_film), Toast.LENGTH_SHORT).show();
+            } else {
+                updataRandomPerson(personCollecitons, repository, context, lifecycleOwner);
+            }
+        } else {
+            collection.setLevel(level + 1);
+            repository.personCollectionDatabaseEditHelper.update(collection);
+            repository.getPersonById(collection.getPerson_id()).observe(lifecycleOwner, new Observer<List<People>>() {
+                @Override
+                public void onChanged(List<People> films) {
+                    Toast.makeText(context,
+                            films.get(0).getName() + context.getString(R.string.markerhanlder_levelup) + collection.getLevel(),
                             Toast.LENGTH_SHORT).show();
                 }
             });
@@ -141,7 +186,7 @@ public class MarkerHandler {
                 .icon(smallMarkerIcon)
                 .anchor(0.5f, .05f);
 
-        double random = Math.random() * 1;
+        double random = Math.random() * 2;
         if (random < 1) {
             markerOptions.title(context.getString(R.string.markerhandler_hidden_film));
         } else if (random < 2 && random > 1) {

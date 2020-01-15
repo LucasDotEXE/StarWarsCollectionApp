@@ -11,7 +11,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.starwarscollectablegame.Controller.StarWarsAPI.SwapiEntryPageListener;
 import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DaoInterfaces.FilmCollectionDao;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.DaoInterfaces.PeopleCollectionDao;
 import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.FilmCollection;
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.PersonColleciton;
 import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerData;
 import com.example.starwarscollectablegame.Model.Database.PlayerDataDatabse.PlayerDataDao;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.DaoInterfaces.FilmDao;
@@ -29,9 +31,9 @@ import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.Starw
 import com.example.starwarscollectablegame.Util.Converters;
 
 @Database(entities ={Film.class, People.class, Planet.class, Species.class, Starship.class, Vehicle.class,
-                     FilmCollection.class,
+                     FilmCollection.class, PersonColleciton.class,
                      PlayerData.class}
-                     , version = 15)
+                     , version = 16)
 @TypeConverters({Converters.class})
 public abstract class StarWarsDatabase extends RoomDatabase{
 
@@ -47,6 +49,7 @@ public abstract class StarWarsDatabase extends RoomDatabase{
     public abstract VehicleDao vehicleDao();
 
     public abstract FilmCollectionDao filmCollectionDao();
+    public abstract PeopleCollectionDao peopleCollectionDao();
 
     public abstract PlayerDataDao playerDataDao();
 

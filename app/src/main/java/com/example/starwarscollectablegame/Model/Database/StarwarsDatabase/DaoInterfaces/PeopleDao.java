@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 
+import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.Film;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface PeopleDao extends BaseStarWarsDao<People> {
     @Override
     @Query("DELETE FROM people_table")
     void deleteAll();
+
+    @Query("SELECT * FROM people_table WHERE name=:name_id")
+    LiveData<List<People>> getPeopleById(String name_id);
 }

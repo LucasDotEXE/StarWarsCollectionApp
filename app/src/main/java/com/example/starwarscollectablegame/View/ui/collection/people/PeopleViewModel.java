@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
+import com.example.starwarscollectablegame.Model.Database.PlayerCollectionDatabase.PlayerCollectionDatabaseData.PersonColleciton;
 import com.example.starwarscollectablegame.Model.StarWarsDataRepository;
 import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.StarwarsDatabaseData.People;
 
@@ -14,25 +14,49 @@ import java.util.List;
 
 public class PeopleViewModel extends AndroidViewModel {
 
-    private StarWarsDataRepository repository;
+    private StarWarsDataRepository starWarsDataRepository;
+//    private PlayerCollectionDataRepository collectionDataRepository;
 
-    private MutableLiveData<String> mText;
-    private LiveData<List<People>> allPeople;
+    private LiveData<List<People>> allFilms;
+    private LiveData<List<PersonColleciton>> filmCollection;
+
+    private PeopleAdapter peopleAdapter;
 
     public PeopleViewModel(@NonNull Application application) {
         super(application);
-        this.repository = new StarWarsDataRepository(application);
-        this.allPeople = repository.getAllPeople();
+        this.starWarsDataRepository = new StarWarsDataRepository(application);
+//        this.collectionDataRepository = new PlayerCollectionDataRepository(application);
+        this.allFilms = this.starWarsDataRepository.getAllPeople();
+        this.filmCollection = this.starWarsDataRepository.getPeopleCollection();
 
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        this.peopleAdapter = new PeopleAdapter(starWarsDataRepository);
+
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<People>> getAllFilms() {
+        return allFilms;
     }
 
-    public LiveData<List<People>> getAllPeople() {
-        return allPeople;
+    public LiveData<List<PersonColleciton>> getFilmCollection() {
+        return filmCollection;
     }
+
+    public StarWarsDataRepository getStarWarsDataRepository() {
+        return starWarsDataRepository;
+    }
+
+//    public PlayerCollectionDataRepository getCollectionDataRepository() {
+//        return collectionDataRepository;
+//    }
+
+    public void reloadList(List<PersonColleciton> filmCollections) {
+        peopleAdapter.setPeopleCollection(filmCollections);
+        peopleAdapter.notifyDataSetChanged();
+    }
+
+    public PeopleAdapter getPeopleAdapter() {
+        return peopleAdapter;
+    }
+
+
 }
