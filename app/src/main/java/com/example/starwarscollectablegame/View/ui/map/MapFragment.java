@@ -72,7 +72,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
-        viewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+        if (savedInstanceState != null) {
+            viewModel = (MapViewModel) savedInstanceState.getSerializable("viewmodel");
+            addMarkersToMap(viewModel.markers);
+        }
+        else
+            viewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+
 
         viewModel.getFilmCollection().observe(this, new Observer<List<FilmCollection>>() {
             @Override
@@ -126,14 +132,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         setLocationListener();
         trackDistance();
 
-
         startSpawning();
     }
 
     @Override
-    public void onResume()
+    public void onSaveInstanceState(Bundle savedInstanceState)
     {
-        super.onResume();
+        savedInstanceState.putSerializable("viewmodel", viewModel);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    private void addMarkersToMap(List<Marker> markers)
+    {
         Context context = this.getContext();
         Resources resources = getResources();
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_id), Context.MODE_PRIVATE);
@@ -150,7 +160,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
 
         //starts random spawning of markers
-        for (Marker marker : viewModel.markers) {
+        for (Marker marker : markers) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(marker.getPosition())
                     .snippet(marker.getSnippet())
@@ -159,6 +169,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mMap.addMarker(markerOptions);
         }
     }
+
+
 
     private void startSpawning() {
         spawnHandler = new Handler();
