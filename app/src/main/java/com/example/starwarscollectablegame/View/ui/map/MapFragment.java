@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -30,6 +32,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -68,7 +72,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_map, container, false);
 
-        viewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+        /*if (savedInstanceState != null) {
+            viewModel = (MapViewModel) savedInstanceState.getSerializable("viewmodel");
+            addMarkersToMap(viewModel.markers);
+        }
+        else*/
+            viewModel = ViewModelProviders.of(this).get(MapViewModel.class);
+
 
         viewModel.getFilmCollection().observe(this, new Observer<List<FilmCollection>>() {
             @Override
@@ -122,9 +132,45 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         setLocationListener();
         trackDistance();
 
-        //starts random spawning of markers
         startSpawning();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        //savedInstanceState.putSerializable("viewmodel", viewModel);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    private void addMarkersToMap(List<Marker> markers)
+    {
+        Context context = this.getContext();
+        Resources resources = getResources();
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.preference_id), Context.MODE_PRIVATE);
+        boolean useSith = sharedPref.getBoolean(context.getString(R.string.preferences_theme_use_sith), false);
+
+        Bitmap b;
+        if (useSith) {
+            b = BitmapFactory.decodeResource(resources, R.drawable.ic_question_red);
+        } else  {
+            b = BitmapFactory.decodeResource(resources, R.drawable.ic_question_blue);
+        }
+
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
+        BitmapDescriptor smallMarkerIcon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+
+        //starts random spawning of markers
+        for (Marker marker : markers) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(marker.getPosition())
+                    .snippet(marker.getSnippet())
+                    .icon(smallMarkerIcon)
+                    .anchor(0.5f, .05f);
+            mMap.addMarker(markerOptions);
+        }
+    }
+
+
 
     private void startSpawning() {
         spawnHandler = new Handler();
@@ -140,12 +186,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             int timeInMs = sec * 1000 + min * 60000;
             spawnHandler.postDelayed(spawnNewCollectionMarker, timeInMs);
 
-            if (viewModel.markers.size() >= 5) {
+            /*if (viewModel.markers.values().size() >= 5) {
                 Marker marker = viewModel.markers.get(0);
                 marker.remove();
-                viewModel.markers.remove(marker);
+                String key = viewModel.markers.keySet().
+                viewModel.markers.re
 
+
+            }*/
+
+            if (viewModel.markers.size() >= 5)
+            {
+                Marker m = viewModel.markers.get(00);
+                m.remove();
+                viewModel.markers.remove(m);
             }
+
+
             try {
                         Marker m =
                         mMap.addMarker(
@@ -155,7 +212,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //                                m.getPosition().latitude,
 //                                m.getPosition().longitude,
 //                                Integer.toString(viewModel.getMarkerCounter()));
-                        viewModel.markers.put(Integer.toString(viewModel.getMarkerCounter()),m);
+                        viewModel.markers.add(m);
+                        //viewModel.markers.put(Integer.toString(viewModel.getMarkerCounter()),m);
+
             } catch (IllegalStateException ex) {
                 Log.w(TAG, "UnstableTimerMethod replaced with new one");
             }

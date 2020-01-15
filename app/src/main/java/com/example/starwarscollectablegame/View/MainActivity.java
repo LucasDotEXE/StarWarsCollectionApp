@@ -6,10 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.starwarscollectablegame.R;
+import com.example.starwarscollectablegame.View.ui.map.MapFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.View;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         }
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+       /* if (savedInstanceState != null)
+        {
+            MapFragment mapFragment =  (MapFragment)getSupportFragmentManager().getFragment(savedInstanceState, "mapFragment");
+            navController.navigate(R.id.fragment_map, savedInstanceState);
+        }*/
     }
 
     @Override
@@ -75,5 +84,15 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        /*getSupportFragmentManager().putFragment(outState, "mapFragment",
+                getSupportFragmentManager().findFragmentById(R.id.nav_map));*/
+
     }
 }

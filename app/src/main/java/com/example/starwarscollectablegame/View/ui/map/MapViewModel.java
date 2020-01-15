@@ -19,16 +19,19 @@ import com.example.starwarscollectablegame.Model.Database.StarwarsDatabase.Starw
 import com.example.starwarscollectablegame.R;
 import com.google.android.gms.maps.model.Marker;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapViewModel extends AndroidViewModel {
+public class MapViewModel extends AndroidViewModel  {
 
 //    private PlayerCollectionDataRepository repository;
     public int markerCounter = 0;
-    public Map<String, Marker> markers = new HashMap<>();
-
+    //public Map<String, Marker> markers = new HashMap<>();
+    public List<Marker> markers = new ArrayList<>();
     //private GeoFenceHandler geoFenceHandler;
     private StarWarsDataRepository helperRepo;
 
